@@ -1,1 +1,2 @@
-../Core/Src/app.c:4:6:app_main	2
+../Core/Src/app.c:5:6:app_main	5
+../Core/Src/app.c:41:6:connect_led_to_switch	2
