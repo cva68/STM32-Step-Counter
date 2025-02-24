@@ -1,5 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
- ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h \
+Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/app.h ../Core/Inc/gpio.h \
+ ../Core/Inc/main.h ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_system.h \
  ../Drivers/CMSIS/Device/ST/STM32C0xx/Include/stm32c0xx.h \
  ../Drivers/CMSIS/Device/ST/STM32C0xx/Include/stm32c071xx.h \
@@ -25,8 +25,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h \
- ../Core/Inc/gpio.h ../Core/Inc/main.h ../Core/Inc/app.h \
  ../Core/Inc/gpio.h
+../Core/Inc/app.h:
+../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_system.h:
@@ -54,7 +55,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h:
-../Core/Inc/gpio.h:
-../Core/Inc/main.h:
-../Core/Inc/app.h:
 ../Core/Inc/gpio.h:
