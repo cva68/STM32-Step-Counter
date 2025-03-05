@@ -1,0 +1,3 @@
+../Core/Src/task_joystick.c:13:6:joystick_task_execute	8	static
+../Core/Src/task_joystick.c:18:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/task_joystick.c:22:11:get_raw_values	8	static

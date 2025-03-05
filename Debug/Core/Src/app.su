@@ -1,3 +1,1 @@
-../Core/Src/app.c:21:6:app_main	16	static
-../Core/Src/app.c:52:6:button_task_execute	8	static
-../Core/Src/app.c:74:6:blinky_task_execute	8	static
+../Core/Src/app.c:26:6:app_main	16	static

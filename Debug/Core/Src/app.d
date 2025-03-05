@@ -20,12 +20,17 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/app.h ../Core/Inc/gpio.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_cortex.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_adc.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc_ex.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_exti.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h \
- ../Core/Inc/gpio.h ../Core/Inc/rgb.h ../Core/Inc/buttons.h
+ ../Core/Inc/gpio.h ../Core/Inc/task_blinky.h ../Core/Inc/task_buttons.h \
+ ../Core/Inc/buttons.h ../Core/Inc/rgb.h ../Core/Inc/task_joystick.h
 ../Core/Inc/app.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -50,11 +55,18 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/app.h ../Core/Inc/gpio.h \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_cortex.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_adc.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc_ex.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_adc_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_exti.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h:
 ../Core/Inc/gpio.h:
-../Core/Inc/rgb.h:
+../Core/Inc/task_blinky.h:
+../Core/Inc/task_buttons.h:
 ../Core/Inc/buttons.h:
+../Core/Inc/rgb.h:
+../Core/Inc/task_joystick.h:

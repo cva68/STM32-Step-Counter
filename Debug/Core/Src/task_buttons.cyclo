@@ -1,0 +1,2 @@
+../Core/Src/task_buttons.c:13:6:buttons_task_init	1
+../Core/Src/task_buttons.c:21:6:buttons_task_execute	5
