@@ -1,3 +1,1 @@
-../Core/Src/app.c:21:6:app_main	3
-../Core/Src/app.c:52:6:button_task_execute	5
-../Core/Src/app.c:74:6:blinky_task_execute	1
+../Core/Src/app.c:30:6:app_main	5
