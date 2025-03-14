@@ -10,6 +10,7 @@
 #include "buttons.h"
 #include "rgb.h"
 #include "tim.h"
+#include "pwm.h"
 
 void buttons_task_init(void) {
 	// Initialise the upstream button driver, enable all RGB LED colour channels.
@@ -23,13 +24,17 @@ void buttons_task_init(void) {
 }
 
 void buttons_task_execute(void) {
+	static uint8_t dutyCycle = 0;
+
 	// Update the RGB LEDs depending on which button is pressed.
 	buttons_update();
 
 	// This is disabled to allow PWM control of RGB_UP (DS3)
-	//if (buttons_checkButton(UP) == PUSHED) {
-	//	rgb_led_toggle(RGB_UP);
-	//}
+	if (buttons_checkButton(UP) == PUSHED) {
+		dutyCycle = (dutyCycle + 25) % 125;
+		if (dutyCycle > 100) dutyCycle = 0;
+		pwm_setDutyCycle(&htim2, TIM_CHANNEL_3, dutyCycle);
+	}
 
 	if (buttons_checkButton(DOWN) == PUSHED) {
 		rgb_led_toggle(RGB_DOWN);

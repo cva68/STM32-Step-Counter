@@ -37,7 +37,8 @@ Core/Src/task_buttons.o: ../Core/Src/task_buttons.c \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h \
  ../Core/Inc/buttons.h ../Core/Inc/rgb.h ../Core/Inc/gpio.h \
- ../Core/Inc/buttons.h ../Core/Inc/rgb.h ../Core/Inc/tim.h
+ ../Core/Inc/buttons.h ../Core/Inc/rgb.h ../Core/Inc/tim.h \
+ ../Core/Inc/pwm.h ../Core/Inc/tim.h
 ../Core/Inc/task_buttons.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -82,4 +83,6 @@ Core/Src/task_buttons.o: ../Core/Src/task_buttons.c \
 ../Core/Inc/gpio.h:
 ../Core/Inc/buttons.h:
 ../Core/Inc/rgb.h:
+../Core/Inc/tim.h:
+../Core/Inc/pwm.h:
 ../Core/Inc/tim.h:
