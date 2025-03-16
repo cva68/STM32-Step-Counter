@@ -39,7 +39,7 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/app.h ../Core/Inc/gpio.h \
  ../Core/Inc/buttons.h ../Core/Inc/rgb.h ../Core/Inc/task_joystick.h \
  ../Core/Inc/task_display.h ../Core/Inc/task_display.h \
  ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
- ../Core/Inc/ssd1306_fonts.h
+ ../Core/Inc/ssd1306_fonts.h ../Core/Inc/task_uart.h ../Core/Inc/usart.h
 ../Core/Inc/app.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -90,3 +90,5 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/app.h ../Core/Inc/gpio.h \
 ../Core/Inc/ssd1306.h:
 ../Core/Inc/ssd1306_conf.h:
 ../Core/Inc/ssd1306_fonts.h:
+../Core/Inc/task_uart.h:
+../Core/Inc/usart.h:

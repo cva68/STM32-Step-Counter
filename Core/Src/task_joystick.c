@@ -5,7 +5,6 @@
  *      Author: awa158
  */
 
-#include "adc.h"
 #include "task_joystick.h"
 #include "joystick.h"
 

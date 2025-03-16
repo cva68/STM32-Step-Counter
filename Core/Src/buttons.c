@@ -93,6 +93,7 @@ void buttons_init (void)
 // a flag is set. Set NUM_BUT_POLLS according to the polling rate.
 void buttons_update (void)
 {
+	static uint8_t dutyCycle = 0;
 	// Iterate through the buttons, updating button variables as required
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{

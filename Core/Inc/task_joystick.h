@@ -8,6 +8,8 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+#include "gpio.h"
+
 void joystick_task_execute(void);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 uint16_t* get_raw_values(void);

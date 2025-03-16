@@ -9,8 +9,6 @@
 #include "ssd1306_fonts.h"
 #include "ssd1306_conf.h"
 #include "joystick.h"
-#include "usart.h"
-#include "gpio.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,14 +20,18 @@ void display_task_init(void) {
 }
 
 void display_task_execute(void) {
-	uint16_t *raw_adc = get_raw_values();
-	char result[14] = "";
-	snprintf(result, 12, "%u,%u\r\n", raw_adc[0], raw_adc[1]);
+	// Fetch coordinate strings
+	struct coord_strings strings;
+	strings = get_coordinate_strings();
 
-	ssd1306_SetCursor(0,0);
-	ssd1306_WriteString("                    ", Font_7x10, White);
-	ssd1306_SetCursor(0,0);
-	ssd1306_WriteString(result, Font_7x10, White);
+	// Display on OLED
+	ssd1306_SetCursor(0, 0);
+	ssd1306_WriteString("                    ", Font_7x10, White); // Clear previous text
+	ssd1306_SetCursor(0, 0);
+	ssd1306_WriteString(strings.x, Font_7x10, White);
+	ssd1306_SetCursor(0, 13);
+	ssd1306_WriteString("                    ", Font_7x10, White); // Clear previous text
+	ssd1306_SetCursor(0, 13);
+	ssd1306_WriteString(strings.y, Font_7x10, White);
 	ssd1306_UpdateScreen();
-	HAL_UART_Transmit(&huart2, &result, 12, 10000);
 }
