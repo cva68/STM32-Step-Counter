@@ -36,7 +36,7 @@ Core/Src/task_blinky.o: ../Core/Src/task_blinky.c \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h \
- ../Core/Inc/gpio.h
+ ../Core/Inc/blinky.h
 ../Core/Inc/task_blinky.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -76,4 +76,4 @@ Core/Src/task_blinky.o: ../Core/Src/task_blinky.c \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h:
-../Core/Inc/gpio.h:
+../Core/Inc/blinky.h:

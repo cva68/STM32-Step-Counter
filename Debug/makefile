@@ -60,8 +60,8 @@ all: main-build
 main-build: StepCounter.elf secondary-outputs
 
 # Tool invocations
-StepCounter.elf StepCounter.map: $(OBJS) $(USER_OBJS) C:\Users\awa158\OneDrive\ -\ University\ of\ Canterbury\ENCE361\StepCounter\STM32C071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "StepCounter.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\awa158\OneDrive - University of Canterbury\ENCE361\StepCounter\STM32C071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="StepCounter.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+StepCounter.elf StepCounter.map: $(OBJS) $(USER_OBJS) C:\Temp\stm32cube\StepCounter\STM32C071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "StepCounter.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Temp\stm32cube\StepCounter\STM32C071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="StepCounter.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

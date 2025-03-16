@@ -10,10 +10,28 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+// Data structure for storing percentage coordinates
+struct percentage_coords
+{
+	int8_t x;
+	int8_t y;
+};
+
+// Data structure for storing string representations of percentage coordinates
+struct coord_strings
+{
+	char x[14];
+	char y[14];
+};
+
+// HW level functions
 void update_joystick(void);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 uint16_t* get_raw_values(void);
 
-// To Do: Function to return x/y values as positions between 0 and 100 (need much further abstraction than get_raw_values)
+// Abstraction functions
+struct percentage_coords get_percentage_coordinates(void);
+struct coord_strings get_coordinate_strings(void);
+char *raw_adc_as_string(void);
 
 #endif // JOYSTICK_H
