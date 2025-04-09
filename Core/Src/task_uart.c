@@ -10,11 +10,7 @@
 
 #include <stdbool.h>
 
-void uart_task_execute(bool SW2_state) {
+void uart_task_execute() {
 	// Transmit debug values, if SW2_state is 1
-	if (SW2_state) {
-		char *raw;
-		raw = raw_adc_as_string();
-		send_debug_message(raw);
-	}
+	// Do something here later
 }

@@ -13,7 +13,7 @@
 
 #include <stdbool.h>
 
-void uart_task_execute(bool SW2_state);
+void uart_task_execute();
 
 
 #endif /* INC_TASK_UART_H_ */

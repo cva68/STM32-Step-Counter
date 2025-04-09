@@ -21,6 +21,9 @@ static uint16_t raw_adc[2];
 void update_joystick(void) {
 	// Update the ADC values of the JoyStick X and Y axis inputs
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)raw_adc, 2);
+
+	// Do something here to detect press and hold
+	// (although maybe we should just extend button.c?)
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
@@ -81,6 +84,29 @@ struct coord_strings get_coordinate_strings(void) {
 	}
 
 	return output;
+}
+
+struct joystick_position_flags get_joystick_flags(void) {
+	struct percentage_coords percentages;
+	percentages = get_percentage_coordinates();
+
+	struct joystick_position_flags flags = {0};
+
+	if (percentages.x > 10) {
+		flags.left = true;
+	} else if (percentages.x < -10) {
+		flags.right = true;
+	}
+
+	if (percentages.y > 10) {
+		flags.down = true;
+	} else if (percentages.y < -10) {
+		flags.up = true;
+	}
+
+	return flags;
+
+	// Presses not yet implemented (although maybe we should just extend button.c?)
 }
 
 char *raw_adc_as_string(void) {
