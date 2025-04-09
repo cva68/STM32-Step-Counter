@@ -1,5 +1,6 @@
 Debug/
 .settings/
+.settings/*
 *.bak
 *.launch
 .vscode
