@@ -1,0 +1,2 @@
+../Core/Src/task_fsm.c:40:6:fsm_state_entry	4
+../Core/Src/task_fsm.c:63:6:fsm_task_execute	15

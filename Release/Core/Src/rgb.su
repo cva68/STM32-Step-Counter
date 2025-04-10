@@ -1,0 +1,10 @@
+../Core/Src/rgb.c:64:6:rgb_led_on	8	static
+../Core/Src/rgb.c:70:6:rgb_colour_on	8	static
+../Core/Src/rgb.c:76:6:rgb_led_off	8	static
+../Core/Src/rgb.c:82:6:rgb_colour_off	8	static
+../Core/Src/rgb.c:88:6:rgb_led_toggle	8	static
+../Core/Src/rgb.c:93:6:rgb_colour_toggle	8	static
+../Core/Src/rgb.c:99:6:rgb_led_all_on	8	static
+../Core/Src/rgb.c:107:6:rgb_led_all_off	8	static
+../Core/Src/rgb.c:115:6:rgb_colour_all_on	8	static
+../Core/Src/rgb.c:123:6:rgb_colour_all_off	8	static

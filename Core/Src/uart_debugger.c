@@ -10,5 +10,5 @@
 
 void send_debug_message(char *message) {
 	// Send a message over UART
-	HAL_UART_Transmit(&huart2, message, 14, 10000);
+	//HAL_UART_Transmit(&huart2, message, 14, 10000);
 }

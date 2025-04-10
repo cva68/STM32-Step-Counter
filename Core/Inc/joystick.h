@@ -34,8 +34,6 @@ struct joystick_position_flags
 	bool right;
 	bool up;
 	bool down;
-	bool short_press;
-	bool long_press;
 };
 
 // HW level functions

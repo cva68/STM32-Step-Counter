@@ -1,0 +1,7 @@
+../Core/Src/joystick.c:22:6:update_joystick	8	static
+../Core/Src/joystick.c:30:6:HAL_ADC_ConvCpltCallback	0	static
+../Core/Src/joystick.c:35:11:get_raw_values	0	static
+../Core/Src/joystick.c:40:26:get_percentage_coordinates	32	static
+../Core/Src/joystick.c:49:22:get_coordinate_strings	72	static
+../Core/Src/joystick.c:90:32:get_joystick_flags	24	static
+../Core/Src/joystick.c:113:7:raw_adc_as_string	16	static

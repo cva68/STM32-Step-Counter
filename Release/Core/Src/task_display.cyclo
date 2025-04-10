@@ -1,0 +1,2 @@
+../Core/Src/task_display.c:17:6:display_task_init	1
+../Core/Src/task_display.c:22:6:display_task_execute	1
