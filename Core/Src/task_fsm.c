@@ -18,6 +18,7 @@
 #include "state_task_goal.h"
 #include "state_task_count.h"
 #include "state_task_distance.h"
+#include "state_task_modify.h"
 
 #define STATE_CHANGE_DELAY 500 // Ticks
 
@@ -35,6 +36,7 @@ state_t prev_state = STATE_STEPS;
 static uint32_t fsmTaskNextRun = 0;
 
 static bool update_display = false;
+bool joystick_release = true;
 
 
 void fsm_state_entry(state_t state) {
@@ -52,7 +54,7 @@ void fsm_state_entry(state_t state) {
 			goal_state_task_execute();
 			break;
 		case STATE_MODIFY_GOAL:
-			//modify_state_task_execute();
+			modify_state_task_execute();
 			break;
 		case STATE_TEST:
 			//test_state_task_execute();
@@ -95,8 +97,13 @@ void fsm_task_execute(void) {
 			break;
 
 		case STATE_GOAL:
-			if (false) { // joystick long press
+			if (buttons_checkButton(JOYSTICK) == RELEASED){
+				joystick_release = true;
+			}
+			if (buttons_isHeld(JOYSTICK) && joystick_release == true) { // joystick long press
 				current_state = STATE_MODIFY_GOAL;
+				buttons_resetHeld(JOYSTICK);
+				joystick_release = false;
 			}
 			else if (joystick_position.left) current_state = STATE_STEPS;
 			else if (joystick_position.right) current_state = STATE_DISTANCE;
@@ -104,6 +111,21 @@ void fsm_task_execute(void) {
 
 		case STATE_MODIFY_GOAL:
 			// joystick long press and joystick short press
+			update_display = true;
+			if (buttons_checkButton(JOYSTICK) == RELEASED){
+				if (joystick_release == true) {
+					current_state = STATE_GOAL;
+					joystick_release = false;
+				}
+				joystick_release = true;
+			}
+
+			 if (buttons_isHeld(JOYSTICK) && joystick_release == true) {
+				set_new_goal();
+				current_state = STATE_GOAL;
+				joystick_release = false;
+
+			}
 			break;
 
 		case STATE_TEST:

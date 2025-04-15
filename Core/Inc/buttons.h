@@ -20,7 +20,7 @@
 //*****************************************************************************
 // Constants
 //*****************************************************************************
-typedef enum butNames {UP = 0, DOWN, LEFT, RIGHT, NUM_BUTTONS} buttonName_t;
+typedef enum butNames {UP = 0, DOWN, LEFT, RIGHT, JOYSTICK, NUM_BUTTONS} buttonName_t;
 typedef enum butStates {RELEASED = 0, PUSHED, NO_CHANGE} buttonState_t;
 
 
@@ -47,5 +47,11 @@ void buttons_update (void);
 // NO_CHANGE. The argument butName should be one of constants in the
 // enumeration butStates, excluding 'NUM_BUTS'. Safe under interrupt.
 buttonState_t buttons_checkButton (buttonName_t butName);
+
+//Check if button is held down for more than 1s
+bool buttons_isHeld(buttonName_t button);
+
+//Reset goofy aaa button to be not held so it doesn't switch states to quickly
+void buttons_resetHeld(buttonName_t button);
 
 #endif /*BUTTONS_H_*/

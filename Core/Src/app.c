@@ -14,6 +14,7 @@
 #include "task_joystick.h"
 #include "task_display.h"
 #include "task_uart.h"
+#include "task_pot.h"
 #include "joystick.h" // For josytick_direction_flags
 
 #define TICK_FREQUENCY_HZ 1000
@@ -30,12 +31,14 @@
 #define DISPLAY_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/DISPLAY_TASK_FREQUENCY)
 #define UART_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/UART_TASK_FREQUENCY)
 #define FSM_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/FSM_TASK_FREQUENCY)
+#define POT_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/FSM_TASK_FREQUENCY)
 
 static uint32_t buttonTaskNextRun = 0;
 static uint32_t joystickTaskNextRun = 0;
 static uint32_t displayTaskNextRun = 0;
 static uint32_t uartTaskNextRun = 0;
 static uint32_t fsmTaskNextRun = 0;
+static uint32_t potTaskNextRun = 0;
 
 void app_main(void)
 {
@@ -78,6 +81,10 @@ void app_main(void)
 		if (ticks > fsmTaskNextRun) {
 			fsm_task_execute();
 			fsmTaskNextRun += FSM_TASK_PERIOD_TICKS;
+		}
+		if (ticks > potTaskNextRun) {
+			pot_task_execute();
+			potTaskNextRun += POT_TASK_PERIOD_TICKS;
 		}
 	}
 }

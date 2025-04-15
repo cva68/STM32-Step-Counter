@@ -35,6 +35,10 @@ typedef struct
 	GPIO_PinState state;
 	uint8_t newStateCount;
 	bool hasChanged;
+
+	//Check how long its being pressed
+	uint32_t pressStartTime;
+	bool isHeld;
 } buttonProperties_t;
 
 // *******************************************************
@@ -66,6 +70,13 @@ buttonProperties_t buttons[NUM_BUTTONS] =
 		{
 			.port = GPIOC,
 			.pin = GPIO_PIN_10,
+			.normalState = GPIO_PIN_RESET
+		},
+		// RIGHT button (SW3, PC10, active HIGH)
+		[JOYSTICK] =
+		{
+			.port = GPIOB,
+			.pin = GPIO_PIN_1,
 			.normalState = GPIO_PIN_RESET
 		}
 };
@@ -112,10 +123,24 @@ void buttons_update (void)
         		buttons[i].hasChanged = true;	// Reset by call to buttons_checkButton()
         		buttons[i].newStateCount = 0;
         	}
+
+			if (rawState != buttons[i].normalState) {
+				buttons[i].pressStartTime = HAL_GetTick();
+				buttons[i].isHeld = false;
+			} else {
+				buttons[i].pressStartTime = 0;
+				buttons[i].isHeld = false;
+			}
         }
         else
         {
         	buttons[i].newStateCount = 0;
+
+			if (buttons[i].state != buttons[i].normalState && !buttons[i].isHeld) {
+				if (HAL_GetTick() - buttons[i].pressStartTime >= 1000) {
+					buttons[i].isHeld = true;
+				}
+			}
         }
 	}
 }
@@ -135,5 +160,14 @@ buttonState_t buttons_checkButton (buttonName_t butName)
 			return PUSHED;
 	}
 	return NO_CHANGE;
+}
+
+bool buttons_isHeld(buttonName_t button)
+{
+	return buttons[button].isHeld;
+}
+
+void buttons_resetHeld(buttonName_t button){
+	buttons[button].isHeld = false;
 }
 
