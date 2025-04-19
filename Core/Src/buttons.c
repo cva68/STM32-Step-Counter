@@ -9,7 +9,8 @@
 //
 // Created by P.J. Bones, UC ECE
 // Updated by Le Yang & F. Youssif, UC ECE.
-// Last modified:  15/01/2025
+// Further modifications from C. Varney, A. Walker for hold and double press detection
+// Last modified:  20/04/2025
 // 
 // *******************************************************
 
