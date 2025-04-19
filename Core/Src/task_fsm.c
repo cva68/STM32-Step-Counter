@@ -18,9 +18,8 @@
 #include "state_task_goal.h"
 #include "state_task_count.h"
 #include "state_task_distance.h"
-#include "state_task_modify.h"
 
-#define STATE_CHANGE_DELAY 500 // Ticks
+#define STATE_CHANGE_DELAY 400 // Ticks
 
 
 typedef enum {
@@ -71,15 +70,14 @@ void fsm_task_execute(void) {
 	// Pull flags from the joystick module
 	struct joystick_position_flags joystick_position = get_joystick_flags();
 
-	// Pull flags from the button module
-	// not implemented
-
 	// Implement state machine
 	switch (current_state) {
 		case STATE_STEPS:
+			// Main state transitions
 			if (joystick_position.left) current_state = STATE_DISTANCE;
 			else if (joystick_position.right) current_state = STATE_GOAL;
-			// If joystick is up in this position, switch between count / % on display
+
+			// Unit switch transition
 			if (joystick_position.up) {
 				toggle_step_unit();
 				update_display = true;
@@ -87,9 +85,11 @@ void fsm_task_execute(void) {
 			break;
 
 		case STATE_DISTANCE:
+			// Main state transitions
 			if (joystick_position.left) current_state = STATE_GOAL;
 			else if (joystick_position.right) current_state = STATE_STEPS;
-			// If joystick is up
+
+			// Unit switch transition
 			if (joystick_position.up) {
 				toggle_distance_unit();
 				update_display = true;
@@ -97,36 +97,37 @@ void fsm_task_execute(void) {
 			break;
 
 		case STATE_GOAL:
-			if (buttons_checkButton(JOYSTICK) == RELEASED){
-				joystick_release = true;
-			}
-			if (buttons_isHeld(JOYSTICK) && joystick_release == true) { // joystick long press
-				current_state = STATE_MODIFY_GOAL;
-				buttons_resetHeld(JOYSTICK);
-				joystick_release = false;
-			}
-			else if (joystick_position.left) current_state = STATE_STEPS;
+//			if (buttons_checkButton(JOYSTICK) == RELEASED){
+//				joystick_release = true;
+//			}
+//			if (buttons_isHeld(JOYSTICK) && buttons_checkButton(JOYSTICK) == RELEASED) { // joystick long press
+//				current_state = STATE_MODIFY_GOAL;
+//				buttons_resetHeld(JOYSTICK);
+//				joystick_release = false;
+//			}
+			// Main state transitions
+			if (joystick_position.left) current_state = STATE_STEPS;
 			else if (joystick_position.right) current_state = STATE_DISTANCE;
 			break;
 
 		case STATE_MODIFY_GOAL:
 			// joystick long press and joystick short press
 			update_display = true;
-			if (buttons_checkButton(JOYSTICK) == RELEASED){
-				if (joystick_release == true) {
-					current_state = STATE_GOAL;
-					joystick_release = false;
-				}
-				joystick_release = true;
-			}
-
-			 if (buttons_isHeld(JOYSTICK) && joystick_release == true) {
-				set_new_goal();
-				current_state = STATE_GOAL;
-				joystick_release = false;
-
-			}
-			break;
+//			if (buttons_checkButton(JOYSTICK) == RELEASED){
+//				if (joystick_release == true) {
+//					current_state = STATE_GOAL;
+//					joystick_release = false;
+//				}
+//				joystick_release = true;
+//			}
+//
+//			 if (buttons_isHeld(JOYSTICK) && joystick_release == true) {
+//				 update_step_goal();
+//				current_state = STATE_GOAL;
+//				joystick_release = false;
+//
+//			}
+//			break;
 
 		case STATE_TEST:
 			// double press of sw2
