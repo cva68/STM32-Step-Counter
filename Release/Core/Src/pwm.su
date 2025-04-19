@@ -1,0 +1,2 @@
+../Core/Src/pwm.c:10:6:pwm_setDutyCycle	16	static
+../Core/Src/pwm.c:24:9:pwm_getDutyCycle	8	static

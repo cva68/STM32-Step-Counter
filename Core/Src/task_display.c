@@ -21,17 +21,5 @@ void display_task_init(void) {
 
 void display_task_execute(void) {
 	// Fetch coordinate strings
-	struct coord_strings strings;
-	strings = get_coordinate_strings();
-
-	// Display on OLED
-	ssd1306_SetCursor(0, 0);
-	ssd1306_WriteString("                    ", Font_7x10, White); // Clear previous text
-	ssd1306_SetCursor(0, 0);
-	ssd1306_WriteString(strings.x, Font_7x10, White);
-	ssd1306_SetCursor(0, 13);
-	ssd1306_WriteString("                    ", Font_7x10, White); // Clear previous text
-	ssd1306_SetCursor(0, 13);
-	ssd1306_WriteString(strings.y, Font_7x10, White);
 	ssd1306_UpdateScreen();
 }
