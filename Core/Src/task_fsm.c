@@ -97,7 +97,7 @@ void fsm_task_execute(void) {
 			break;
 
 		case STATE_GOAL:
-			if (buttons_checkButton(JOYSTICK) == HELD) current_state = STATE_MODIFY_GOAL;
+			if (buttons_checkButton(JOYSTICK) == PUSHED) current_state = STATE_MODIFY_GOAL;
 			else if (joystick_position.left) current_state = STATE_STEPS;
 			else if (joystick_position.right) current_state = STATE_DISTANCE;
 			break;
