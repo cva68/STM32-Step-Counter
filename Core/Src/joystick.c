@@ -18,13 +18,16 @@
 #define MIDDLE_ADC_VALUE 2047
 
 static uint16_t raw_adc[3];
+static struct joystick_position_flags flags = {0};
+
+void update_position_flags(void); // Defined later
 
 void update_joystick(void) {
 	// Update the ADC values of the JoyStick X and Y axis inputs
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)raw_adc, 3);
 
-	// Do something here to detect press and hold
-	// (although maybe we should just extend button.c?)
+	// Raise position flags if the joystick has moved
+	update_position_flags();
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
@@ -85,13 +88,13 @@ struct coord_strings get_coordinate_strings(void) {
 	}
 
 	return output;
-}
+} // get_coordinate_strings
 
-struct joystick_position_flags get_joystick_flags(void) {
+void update_position_flags(void) {
+	// Update the stored position flags
+	// These get reset when get_joystick_position_flags is called
 	struct percentage_coords percentages;
 	percentages = get_percentage_coordinates();
-
-	struct joystick_position_flags flags = {0};
 
 	if (percentages.x > 30) {
 		flags.left = true;
@@ -104,10 +107,22 @@ struct joystick_position_flags get_joystick_flags(void) {
 	} else if (percentages.y < -30) {
 		flags.up = true;
 	}
+}
 
-	return flags;
+struct joystick_position_flags get_joystick_flags(void) {
+	// Return any raised position flags
 
-	// Presses not yet implemented (although maybe we should just extend button.c?)
+	// Store the current flags
+	struct joystick_position_flags flagsToReturn = flags;
+
+	// Reset the flags to all be false
+	flags.left = 0;
+	flags.right = 0;
+	flags.up = 0;
+	flags.down = 0;
+
+	// Return the flag values, prior to when they were reset
+	return flagsToReturn;
 }
 
 char *raw_adc_as_string(void) {

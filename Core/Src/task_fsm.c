@@ -64,11 +64,13 @@ void fsm_state_entry(state_t state) {
 void fsm_task_execute(void) {
 	// Task to be called by the scheduler, to move between FSM states
 
+	// Pull flags from the joystick module
+	// This is done regardless of whether fsmTaskNextRun has elapsed, as the
+	// flags must be cleared at the same rate this task is executed at.
+	struct joystick_position_flags joystick_position = get_joystick_flags();
+
 	// Don't do anything if the last input was recent
 	if (HAL_GetTick() < fsmTaskNextRun) return;
-
-	// Pull flags from the joystick module
-	struct joystick_position_flags joystick_position = get_joystick_flags();
 
 	// Implement state machine
 	switch (current_state) {
@@ -122,8 +124,6 @@ void fsm_task_execute(void) {
 
 	if (current_state != prev_state || update_display) {
 		// Reset the display before changing state
-		ssd1306_SetCursor(0, 0);
-		ssd1306_WriteString("== STEP COUNTER ==", Font_7x10, White);
 		ssd1306_SetCursor(0, 13);
 		ssd1306_WriteString("                  ", Font_7x10, White); // Clear previous text
 		ssd1306_SetCursor(0, 13);

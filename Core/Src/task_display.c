@@ -17,6 +17,8 @@
 void display_task_init(void) {
 	ssd1306_Init();
 	ssd1306_SetCursor(0, 0);
+	ssd1306_WriteString("== STEP COUNTER ==", Font_7x10, White);
+	ssd1306_SetCursor(0, 13);
 }
 
 void display_task_execute(void) {
