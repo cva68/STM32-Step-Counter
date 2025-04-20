@@ -1,11 +1,14 @@
 /*
- * task_fsm.c
+ * task_display_fsm.c
  *
  * Task to switch between FSM states based on joystick / button inputs
  *
  *  Created on: Apr 9, 2025
  *      Author: connor
  */
+
+#ifndef TASK_DISPLAY_FSM_H
+#define TASK_DISPLAY_FSM_H
 
 #include "joystick.h"
 #include "buttons.h"
@@ -27,7 +30,11 @@ typedef enum {
 	STATE_TEST
 } state_t;
 
-void fsm_state_entry(state_t state);
+void display_fsm_task_init(void);
 
-void fsm_task_execute(void);
+void update_fsm_display(state_t state);
+
+void display_fsm_task_execute(void);
+
+#endif // TASK_DISPLAY_FSM_H
 

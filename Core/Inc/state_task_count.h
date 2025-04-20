@@ -21,6 +21,7 @@
 void increment_steps(uint16_t by);
 void decrement_steps(uint16_t by);
 uint16_t get_step_count(void);
+void set_step_count(uint16_t steps);
 void toggle_step_unit(void);
 void steps_state_task_execute(void);
 

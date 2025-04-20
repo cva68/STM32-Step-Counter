@@ -11,8 +11,6 @@
 #include "gpio.h"
 
 void joystick_task_execute(void);
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
-uint16_t* get_raw_values(void);
 
 // To Do: Function to return x/y values as positions between 0 and 100 (need much further abstraction than get_raw_values)
 

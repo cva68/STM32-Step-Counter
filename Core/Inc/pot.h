@@ -8,7 +8,6 @@
 #ifndef POT_H
 #define POT_H
 
-void update_pot(void);
-uint16_t* get_pot_raw_values(void);
+uint16_t get_scaled_pot_value(void);
 
 #endif /* INC_POT_H_ */
