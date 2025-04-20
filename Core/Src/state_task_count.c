@@ -32,6 +32,11 @@ void decrement_steps(uint16_t by) {
     step_count -= by;
 }
 
+void set_step_count(uint16_t steps) {
+	// Increase the step count
+    step_count = steps;
+}
+
 uint16_t get_step_count(void) {
 	// Get the step count
     return step_count;
