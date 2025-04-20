@@ -97,37 +97,22 @@ void fsm_task_execute(void) {
 			break;
 
 		case STATE_GOAL:
-//			if (buttons_checkButton(JOYSTICK) == RELEASED){
-//				joystick_release = true;
-//			}
-//			if (buttons_isHeld(JOYSTICK) && buttons_checkButton(JOYSTICK) == RELEASED) { // joystick long press
-//				current_state = STATE_MODIFY_GOAL;
-//				buttons_resetHeld(JOYSTICK);
-//				joystick_release = false;
-//			}
-			// Main state transitions
-			if (joystick_position.left) current_state = STATE_STEPS;
+			if (buttons_checkButton(JOYSTICK) == PUSHED) current_state = STATE_MODIFY_GOAL;
+			else if (joystick_position.left) current_state = STATE_STEPS;
 			else if (joystick_position.right) current_state = STATE_DISTANCE;
 			break;
 
 		case STATE_MODIFY_GOAL:
-			// joystick long press and joystick short press
 			update_display = true;
-//			if (buttons_checkButton(JOYSTICK) == RELEASED){
-//				if (joystick_release == true) {
-//					current_state = STATE_GOAL;
-//					joystick_release = false;
-//				}
-//				joystick_release = true;
-//			}
-//
-//			 if (buttons_isHeld(JOYSTICK) && joystick_release == true) {
-//				 update_step_goal();
-//				current_state = STATE_GOAL;
-//				joystick_release = false;
-//
-//			}
-//			break;
+			buttonState_t buttonState = buttons_checkButton(JOYSTICK);
+
+			if (buttonState == HELD){
+				current_state = STATE_GOAL;
+				update_step_goal();
+			} else if (buttonState == PUSHED) {
+				current_state = STATE_GOAL;
+			}
+			break;
 
 		case STATE_TEST:
 			// double press of sw2

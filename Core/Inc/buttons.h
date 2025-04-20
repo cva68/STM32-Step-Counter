@@ -10,7 +10,8 @@
 //
 // Created by P.J. Bones, UC ECE
 // Updated by Le Yang & F. Youssif, UC ECE.
-// Last modified:  15/01/2025
+// Further modifications from C. Varney, A. Walker for hold and double press detection
+// Last modified:  20/04/2025
 // 
 // *******************************************************
 
@@ -19,9 +20,11 @@
 
 //*****************************************************************************
 // Constants
+// 		WAIT states are used for transitions between RELEASED and HELD / DOUBLE / PUSHED.
+// 		The state is essentially undefined if the button is polled and one of these is returned.
 //*****************************************************************************
-typedef enum butNames {UP = 0, DOWN, LEFT, RIGHT, NUM_BUTTONS} buttonName_t;
-typedef enum butStates {RELEASED = 0, PUSHED, NO_CHANGE} buttonState_t;
+typedef enum butNames {UP = 0, DOWN, LEFT, RIGHT, JOYSTICK, NUM_BUTTONS} buttonName_t;
+typedef enum butStates {RELEASED = 0, PUSHED, HELD, DOUBLE, WAIT1, WAIT2, NO_CHANGE} buttonState_t;
 
 
 // Debouncing algorithm: A finite state machine (FSM) is associated with each button.

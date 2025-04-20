@@ -9,7 +9,8 @@
 //
 // Created by P.J. Bones, UC ECE
 // Updated by Le Yang & F. Youssif, UC ECE.
-// Last modified:  15/01/2025
+// Further modifications from C. Varney, A. Walker for hold and double press detection
+// Last modified:  20/04/2025
 // 
 // *******************************************************
 
@@ -20,6 +21,12 @@
 #include "stm32c0xx_hal.h"
 
 #define NUM_BUT_POLLS 3
+
+#define HOLD_THRESHOLD_MS 500
+#define RELEASE_THRESHOLD_MS 150
+
+#define BUTTON_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUTTON_TASK_FREQUENCY)
+#define JOYSTICK_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/JOYSTICK_TASK_FREQUENCY)
 
 // *******************************************************
 // Typedefs
@@ -32,7 +39,9 @@ typedef struct
 	const GPIO_PinState normalState;
 
 	// Runtime properties
-	GPIO_PinState state;
+	GPIO_PinState pinState;
+	buttonState_t buttonState;
+	uint32_t lastChangeTicks;
 	uint8_t newStateCount;
 	bool hasChanged;
 } buttonProperties_t;
@@ -67,7 +76,15 @@ buttonProperties_t buttons[NUM_BUTTONS] =
 			.port = GPIOC,
 			.pin = GPIO_PIN_10,
 			.normalState = GPIO_PIN_RESET
+		},
+		// JOYSTICK button
+		[JOYSTICK] =
+		{
+			.port = GPIOB,
+			.pin = GPIO_PIN_1,
+			.normalState = GPIO_PIN_RESET
 		}
+
 };
 
 // *******************************************************
@@ -76,7 +93,7 @@ void buttons_init (void)
 {
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{
-		buttons[i].state = buttons[i].normalState;
+		buttons[i].pinState = buttons[i].normalState;
 		buttons[i].newStateCount = 0;
 		buttons[i].hasChanged = false;
 	}
@@ -101,14 +118,14 @@ void buttons_update (void)
 		GPIO_PinState rawState = HAL_GPIO_ReadPin(buttons[i].port, buttons[i].pin);
 
 		// If reading is different from last confirmed state, increment counter
-        if (rawState != buttons[i].state)
+        if (rawState != buttons[i].pinState)
         {
         	buttons[i].newStateCount++;
 
         	// If count exceeds poll count, confirm change of state
         	if (buttons[i].newStateCount >= NUM_BUT_POLLS)
         	{
-        		buttons[i].state = rawState;
+        		buttons[i].pinState = rawState;
         		buttons[i].hasChanged = true;	// Reset by call to buttons_checkButton()
         		buttons[i].newStateCount = 0;
         	}
@@ -117,8 +134,53 @@ void buttons_update (void)
         {
         	buttons[i].newStateCount = 0;
         }
+
+        // Button FSM
+        switch (buttons[i].buttonState) {
+        		case RELEASED:
+        			// If the button has just been pushed, move to the first wait state
+        			if (buttons[i].hasChanged && buttons[i].pinState != buttons[i].normalState){
+        				buttons[i].buttonState = WAIT1;
+        				buttons[i].lastChangeTicks = HAL_GetTick();
+        				buttons[i].hasChanged = false;
+        			}
+        			break;
+
+        		case WAIT1:
+        			// If the button has been released, move to the second wait state
+        			if (buttons[i].pinState == buttons[i].normalState){
+        				buttons[i].buttonState = WAIT2;
+        				buttons[i].lastChangeTicks = HAL_GetTick();
+        				buttons[i].hasChanged = false;
+        			}
+
+        			// If we're waiting and the hold threshold is exceeded, can confirm the button is held.
+        			else if (HAL_GetTick() > buttons[i].lastChangeTicks + HOLD_THRESHOLD_MS) {
+        				buttons[i].buttonState = HELD;
+        			}
+        			break;
+
+        		case WAIT2:
+        			// If we're in the second wait state and we get another push, the button has been double clicked.
+        			if (buttons[i].pinState != buttons[i].normalState) {
+        				buttons[i].buttonState = DOUBLE;
+        				buttons[i].hasChanged = false;
+        			}
+
+        			// If we're in the second wait state and we time out waiting for another click, the button has
+        			// been single clicked.
+        			else if (HAL_GetTick() > buttons[i].lastChangeTicks + RELEASE_THRESHOLD_MS) {
+						buttons[i].buttonState = PUSHED;
+					}
+        			break;
+
+        		default:
+        			break; // Transitioning out of PUSHED, DOUBLE or HOLD is handled by checkButton.
+       	}
 	}
 }
+
+
 
 // *******************************************************
 // buttons_checkButton: Function returns the new button logical state if the button
@@ -126,14 +188,16 @@ void buttons_update (void)
 // otherwise returns NO_CHANGE.
 buttonState_t buttons_checkButton (buttonName_t butName)
 {
-	if (buttons[butName].hasChanged)
-	{
-		buttons[butName].hasChanged = false;
-		if (buttons[butName].state == buttons[butName].normalState)
-			return RELEASED;
-		else
-			return PUSHED;
-	}
-	return NO_CHANGE;
-}
+	// Only continue if button has changed states
+	if (buttons[butName].buttonState == RELEASED ||
+		buttons[butName].buttonState == WAIT1 ||
+		buttons[butName].buttonState == WAIT2) return RELEASED;
 
+	// Reset the change flag, return the button state to released
+	buttonState_t currentState = buttons[butName].buttonState;
+	buttons[butName].hasChanged = false;
+	buttons[butName].buttonState = RELEASED;
+
+	// Return the current state
+	return currentState;
+}
