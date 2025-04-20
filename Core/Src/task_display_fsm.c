@@ -149,7 +149,7 @@ void display_fsm_task_execute(void) {
 		// If the display requires updating (from a state change, or from a function that
 		// requires regular display updates), clear the display and call the FSM display function
 		update_fsm_display(current_state);
-		update_display = false;
+		//update_display = false;
 	}
 }
 

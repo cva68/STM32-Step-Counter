@@ -26,6 +26,11 @@ uint16_t get_step_goal() {
 	return step_goal;
 }
 
+void increment_step_goal(uint16_t by) {
+	// Set the step goal
+    step_goal += by;
+}
+
 void update_step_goal() {
 	// Transfer the static new_goal value to the actual step_goal
 	set_step_goal(new_goal);

@@ -37,6 +37,7 @@ typedef struct
 	GPIO_TypeDef* const port;
 	const uint16_t pin;
 	const GPIO_PinState normalState;
+	const bool detectHoldAndDouble; // Set this false to ignore DOUBLE and HOLD states
 
 	// Runtime properties
 	GPIO_PinState pinState;
@@ -55,34 +56,39 @@ buttonProperties_t buttons[NUM_BUTTONS] =
 		[UP] = {
 			.port = GPIOC,
 			.pin = GPIO_PIN_11,
-			.normalState = GPIO_PIN_RESET
+			.normalState = GPIO_PIN_RESET,
+			.detectHoldAndDouble = false
 		},
 		// DOWN button (SW2, PC1, active HIGH)
 		[DOWN] = {
 			.port = GPIOC,
 			.pin = GPIO_PIN_1,
-			.normalState = GPIO_PIN_RESET
+			.normalState = GPIO_PIN_RESET,
+			.detectHoldAndDouble = true
 		},
 	    // LEFT button (SW4, PC13, active LOW)
 		[LEFT] =
 		{
 			.port = GPIOC,
 			.pin = GPIO_PIN_13,
-			.normalState = GPIO_PIN_SET
+			.normalState = GPIO_PIN_SET,
+			.detectHoldAndDouble = true
 		},
 		// RIGHT button (SW3, PC10, active HIGH)
 		[RIGHT] =
 		{
 			.port = GPIOC,
 			.pin = GPIO_PIN_10,
-			.normalState = GPIO_PIN_RESET
+			.normalState = GPIO_PIN_RESET,
+			.detectHoldAndDouble = true
 		},
 		// JOYSTICK button
 		[JOYSTICK] =
 		{
 			.port = GPIOB,
 			.pin = GPIO_PIN_1,
-			.normalState = GPIO_PIN_RESET
+			.normalState = GPIO_PIN_RESET,
+			.detectHoldAndDouble = true
 		}
 
 };
@@ -135,7 +141,15 @@ void buttons_update (void)
         	buttons[i].newStateCount = 0;
         }
 
-        // Button FSM
+        // If we don't want to consider HOLD and DOUBLE states, set PRESSED / RELEASED here
+        if (!buttons[i].detectHoldAndDouble) {
+        	if (buttons[i].hasChanged && buttons[i].pinState != buttons[i].normalState) {
+        		buttons[i].buttonState = PUSHED;
+        	}
+        	continue;
+        }
+
+        // Otherwise, enter the button FSM to detect double click / hold
         switch (buttons[i].buttonState) {
         		case RELEASED:
         			// If the button has just been pushed, move to the first wait state
