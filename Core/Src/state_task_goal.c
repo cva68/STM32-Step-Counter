@@ -12,12 +12,6 @@
 #include "state_task_goal.h"
 #include "pot.h"
 
-// Values for mapping ADC values to step goal values
-#define GOAL_RANGE 14500
-#define ADC_RANGE 3956
-#define GOAL_MIN 500
-#define ADC_MIN 139
-
 static uint16_t step_goal = 1000;
 static uint16_t new_goal;
 
@@ -39,17 +33,12 @@ void update_step_goal() {
 
 void modify_state_task_execute(void)
 {
-	// State to modify the step goal
-	uint16_t vr1_adc = get_pot_raw_values();
-	new_goal = ((GOAL_RANGE * (vr1_adc - ADC_MIN)) / ADC_RANGE) + GOAL_MIN; // Convert ADC to goal value
-	new_goal = (new_goal / 100) * 100; // Round down to nearest 100
-
-	// Ensure the goal stays above 500, even when the ADC drops below the stated minimum
-	if(new_goal < 500) new_goal = 500;
+	// Get the pot value
+	new_goal = get_scaled_pot_value();
 
 	// Display the step goal
-	static char goal[18];
-	snprintf(goal, sizeof(goal), "New Goal: %u\n", new_goal);
+	static char goal[19];
+	snprintf(goal, sizeof(goal), "New Goal: %u        ", new_goal);
 	ssd1306_WriteString(goal, Font_7x10, White);
 }
 
@@ -57,6 +46,6 @@ void goal_state_task_execute(void)
 {
 	// State to display the step goal
 	static char goal[18];
-	snprintf(goal, sizeof(goal), "Goal: %u\n", step_goal);
+	snprintf(goal, sizeof(goal), "Goal: %u           ", step_goal);
 	ssd1306_WriteString(goal, Font_7x10, White);
 }
