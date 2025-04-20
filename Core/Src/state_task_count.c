@@ -45,12 +45,12 @@ void toggle_step_unit(void) {
 void steps_state_task_execute(void)
 {
 	// Display the step count
-	static char count[18];
+	static char count[19];
 	if (steps_as_percentage) {
 		uint16_t step_percentage = (step_count * 100) / get_step_goal(); // avoid floats
-		snprintf(count, sizeof(count), "Steps: %u%% goal", step_percentage);
+		snprintf(count, sizeof(count), "Steps: %u%% goal  ", step_percentage);
 	} else {
-		snprintf(count, sizeof(count), "Steps: %u", step_count);
+		snprintf(count, sizeof(count), "Steps: %u         ", step_count);
 	}
 	ssd1306_WriteString(count, Font_7x10, White);
 }

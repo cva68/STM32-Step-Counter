@@ -8,37 +8,38 @@
  *      Author: cva68
  */
 
+#include <task_adc.h>
 #include "app.h"
 #include "gpio.h"
 #include "task_buttons.h"
 #include "task_joystick.h"
-#include "task_display.h"
 #include "task_uart.h"
-#include "task_pot.h"
-#include "joystick.h" // For josytick_direction_flags
+#include "task_display_fsm.h"
+#include "adc_controller.h"
 
 #define TICK_FREQUENCY_HZ 1000
 #define HZ_TO_TICKS(FREQUENCY_HZ) (TICK_FREQUENCY_HZ/FREQUENCY_HZ)
 
 #define BUTTON_TASK_FREQUENCY 100
-#define JOYSTICK_TASK_FREQUENCY 13
-#define DISPLAY_TASK_FREQUENCY 4
+#define JOYSTICK_TASK_FREQUENCY 10
 #define UART_TASK_FREQUENCY 4
-#define FSM_TASK_FREQUENCY 6
+#define DISPLAY_FSM_TASK_FREQUENCY 6
+#define ADC_TASK_FREQUENCY 10
 
 #define BUTTON_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUTTON_TASK_FREQUENCY)
 #define JOYSTICK_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/JOYSTICK_TASK_FREQUENCY)
-#define DISPLAY_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/DISPLAY_TASK_FREQUENCY)
 #define UART_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/UART_TASK_FREQUENCY)
-#define FSM_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/FSM_TASK_FREQUENCY)
-#define POT_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/FSM_TASK_FREQUENCY)
+#define DISPLAY_FSM_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/DISPLAY_FSM_TASK_FREQUENCY)
+#define ADC_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/ADC_TASK_FREQUENCY)
+
+// Delay changing FSM states until ADC transients have dissipated
+#define DISPLAY_TASK_OFFSET 100
 
 static uint32_t buttonTaskNextRun = 0;
 static uint32_t joystickTaskNextRun = 0;
-static uint32_t displayTaskNextRun = 0;
 static uint32_t uartTaskNextRun = 0;
-static uint32_t fsmTaskNextRun = 0;
-static uint32_t potTaskNextRun = 0;
+static uint32_t displayFSMTaskNextRun = 0;
+static uint32_t adcTaskNextRun = 0;
 
 void app_main(void)
 {
@@ -46,12 +47,13 @@ void app_main(void)
 	uint32_t ticks;
 	buttonTaskNextRun = HAL_GetTick() + BUTTON_TASK_PERIOD_TICKS;
 	joystickTaskNextRun = HAL_GetTick() + JOYSTICK_TASK_PERIOD_TICKS;
-	displayTaskNextRun = HAL_GetTick() + DISPLAY_TASK_PERIOD_TICKS;
+	uartTaskNextRun = HAL_GetTick() + UART_TASK_PERIOD_TICKS;
+	displayFSMTaskNextRun = HAL_GetTick() + DISPLAY_FSM_TASK_PERIOD_TICKS + DISPLAY_TASK_OFFSET;
+	adcTaskNextRun = HAL_GetTick() + ADC_TASK_PERIOD_TICKS;
 
 	// Initialise tasks.
 	buttons_task_init();
-	display_task_init();
-
+	display_fsm_task_init();
 
 	// Periodically execute tasks at the frequency defined above.
 	while(1)
@@ -68,23 +70,18 @@ void app_main(void)
 			joystickTaskNextRun += JOYSTICK_TASK_PERIOD_TICKS;
 		}
 
-		if (ticks > displayTaskNextRun) {
-			display_task_execute();
-			displayTaskNextRun += DISPLAY_TASK_PERIOD_TICKS;
-		}
-
 		if (ticks > uartTaskNextRun) {
 			uart_task_execute();
 			uartTaskNextRun += UART_TASK_PERIOD_TICKS;
 		}
 
-		if (ticks > fsmTaskNextRun) {
-			fsm_task_execute();
-			fsmTaskNextRun += FSM_TASK_PERIOD_TICKS;
+		if (ticks > displayFSMTaskNextRun) {
+			display_fsm_task_execute();
+			displayFSMTaskNextRun += DISPLAY_FSM_TASK_PERIOD_TICKS;
 		}
-		if (ticks > potTaskNextRun) {
-			pot_task_execute();
-			potTaskNextRun += POT_TASK_PERIOD_TICKS;
+		if (ticks > adcTaskNextRun) {
+			adc_task_execute();
+			adcTaskNextRun += ADC_TASK_PERIOD_TICKS;
 		}
 	}
 }
