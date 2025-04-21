@@ -18,6 +18,7 @@
 
 void modify_state_task_execute(void);
 void set_step_goal(uint16_t goal);
+void increment_step_goal(uint16_t by);
 uint16_t get_step_goal();
 void update_step_goal();
 void goal_state_task_execute(void);
