@@ -36,13 +36,13 @@ Core/Src/task_display_fsm.o: ../Core/Src/task_display_fsm.c \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h \
- ../Core/Inc/buzzer.h ../Core/Inc/buttons.h ../Core/Inc/ssd1306.h \
- ../Core/Inc/ssd1306_conf.h ../Core/Inc/ssd1306_fonts.h \
- ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
- ../Core/Inc/state_task_goal.h ../Core/Inc/ssd1306_fonts.h \
- ../Core/Inc/state_task_count.h ../Core/Inc/state_task_goal.h \
- ../Core/Inc/state_task_distance.h ../Core/Inc/state_task_count.h \
- ../Core/Inc/state_task_test.h ../Core/Inc/joystick.h
+ ../Core/Inc/buttons.h ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
+ ../Core/Inc/ssd1306_fonts.h ../Core/Inc/ssd1306.h \
+ ../Core/Inc/ssd1306_conf.h ../Core/Inc/state_task_goal.h \
+ ../Core/Inc/ssd1306_fonts.h ../Core/Inc/state_task_count.h \
+ ../Core/Inc/state_task_goal.h ../Core/Inc/state_task_distance.h \
+ ../Core/Inc/state_task_count.h ../Core/Inc/state_task_test.h \
+ ../Core/Inc/joystick.h
 ../Core/Inc/joystick.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -82,7 +82,6 @@ Core/Src/task_display_fsm.o: ../Core/Src/task_display_fsm.c \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h:
-../Core/Inc/buzzer.h:
 ../Core/Inc/buttons.h:
 ../Core/Inc/ssd1306.h:
 ../Core/Inc/ssd1306_conf.h:

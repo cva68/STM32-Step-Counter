@@ -1,1 +1,2 @@
-../Core/Src/task_buzzer.c:21:6:buzzer_task_execute	5
+../Core/Src/task_buzzer.c:21:6:buzzer_task_init	1
+../Core/Src/task_buzzer.c:25:6:buzzer_task_execute	5

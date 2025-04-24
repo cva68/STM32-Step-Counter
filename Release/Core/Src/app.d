@@ -43,8 +43,7 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
  ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
  ../Core/Inc/ssd1306_fonts.h ../Core/Inc/state_task_goal.h \
  ../Core/Inc/state_task_count.h ../Core/Inc/state_task_distance.h \
- ../Core/Inc/task_buzzer.h ../Core/Inc/adc_controller.h ../Core/Inc/adc.h \
- ../Core/Inc/buzzer.h
+ ../Core/Inc/task_buzzer.h ../Core/Inc/adc_controller.h ../Core/Inc/adc.h
 ../Core/Inc/task_adc.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -103,4 +102,3 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
 ../Core/Inc/task_buzzer.h:
 ../Core/Inc/adc_controller.h:
 ../Core/Inc/adc.h:
-../Core/Inc/buzzer.h:
