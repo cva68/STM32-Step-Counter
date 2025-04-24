@@ -18,6 +18,10 @@ uint8_t buzzer_timer = 0;
 bool buzzer_on = false;
 bool new_goal_set = true;
 
+void buzzer_task_init(void){
+	buzzer_init();
+}
+
 void buzzer_task_execute(void) {
 	if(get_step_count() == get_step_goal()){
 		if(new_goal_set == true){

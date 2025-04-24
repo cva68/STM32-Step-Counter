@@ -17,7 +17,6 @@
 #include "task_display_fsm.h"
 #include "task_buzzer.h"
 #include "adc_controller.h"
-#include "buzzer.h"
 
 #define TICK_FREQUENCY_HZ 1000
 #define HZ_TO_TICKS(FREQUENCY_HZ) (TICK_FREQUENCY_HZ/FREQUENCY_HZ)
@@ -60,9 +59,7 @@ void app_main(void)
 	// Initialise tasks.
 	buttons_task_init();
 	display_fsm_task_init();
-
-	// Initialise buzzer.
-	buzzer_init();
+	buzzer_task_init();
 
 	// Periodically execute tasks at the frequency defined above.
 	while(1)
