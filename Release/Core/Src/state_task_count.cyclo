@@ -1,5 +1,6 @@
 ../Core/Src/state_task_count.c:25:6:increment_steps	1
 ../Core/Src/state_task_count.c:30:6:decrement_steps	1
-../Core/Src/state_task_count.c:35:10:get_step_count	1
-../Core/Src/state_task_count.c:40:6:toggle_step_unit	1
-../Core/Src/state_task_count.c:45:6:steps_state_task_execute	2
+../Core/Src/state_task_count.c:35:6:set_step_count	1
+../Core/Src/state_task_count.c:40:10:get_step_count	1
+../Core/Src/state_task_count.c:45:6:toggle_step_unit	1
+../Core/Src/state_task_count.c:50:6:steps_state_task_execute	2

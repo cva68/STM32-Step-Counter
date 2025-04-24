@@ -24,4 +24,5 @@ void adc_controller_update(void);
 uint16_t* get_adc_values(void);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 
+
 #endif // ADC_CONTROLLER_H

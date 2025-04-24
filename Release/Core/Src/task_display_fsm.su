@@ -1,0 +1,3 @@
+../Core/Src/task_display_fsm.c:41:6:display_fsm_task_init	16	static
+../Core/Src/task_display_fsm.c:49:6:update_fsm_display	8	static
+../Core/Src/task_display_fsm.c:76:6:display_fsm_task_execute	48	static

@@ -8,6 +8,7 @@
  */
 
 #include "joystick.h"
+#include "buzzer.h"
 #include "buttons.h"
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
@@ -118,7 +119,7 @@ void display_fsm_task_execute(void) {
 			break;
 
 		case STATE_GOAL:
-			if (joystickButtonState == PUSHED) current_state = STATE_MODIFY_GOAL;
+			if (joystickButtonState == HELD) current_state = STATE_MODIFY_GOAL;
 			else if (joystick_position.left) current_state = STATE_STEPS;
 			else if (joystick_position.right) current_state = STATE_DISTANCE;
 			else if (SW2ButtonState == DOUBLE) current_state = STATE_TEST;
