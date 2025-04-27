@@ -48,12 +48,16 @@ void test_state_task_execute(void)
 	// Moves faster for a larger upperbound, slower for a smaller upperbound
 	int magnitude = (current_goal / 1000) * (y * y) / RATE_DIVIDER;
 
-	if (y > 0)
+	if (y > 0) {
 		current_steps -= magnitude;
-	else
+	} else if (y < 0) {
+		// In the case where the current steps is greater than the current goal.
+		// disallow increasing the step count.
+		if (current_steps > current_goal) return;
 		current_steps += magnitude;
+	}
 
-	current_steps = (current_steps / 5) * 5; // Round to nearest 5
+	current_steps = (current_steps / 10) * 10; // Round to nearest 10
 
 	if (joystick_pos.y < 0 && current_steps > current_goal) current_steps = current_goal; // Exceeded goal
 	else if (joystick_pos.y > 0 && current_steps > old_steps) current_steps = 0; // Underflow
@@ -62,7 +66,7 @@ void test_state_task_execute(void)
 
 	// Display the step goal
 	static char new_step_count[19];
-	snprintf(new_step_count, sizeof(new_step_count), "New Steps: %u        ", current_steps);
+	snprintf(new_step_count, sizeof(new_step_count), "New Steps: %u       ", current_steps);
 	ssd1306_WriteString(new_step_count, Font_7x10, White);
 }
 

@@ -129,7 +129,6 @@ void display_fsm_task_execute(void) {
 				current_state = STATE_GOAL;
 				update_step_goal();
 			} else if (joystickButtonState == PUSHED) current_state = STATE_GOAL;
-			else if (SW2ButtonState == DOUBLE) current_state = STATE_TEST;
 			break;
 
 		case STATE_TEST:

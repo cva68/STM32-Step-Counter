@@ -35,8 +35,8 @@
 #define ADC_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/ADC_TASK_FREQUENCY)
 #define BUZZER_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUZZER_TASK_FREQUENCY)
 
-// Delay changing FSM states until ADC transients have dissipated
-#define DISPLAY_TASK_OFFSET 100
+// Delay some tasks until ADC transients have dissipated
+#define ADC_TASK_OFFSET 50
 
 static uint32_t buttonTaskNextRun = 0;
 static uint32_t joystickTaskNextRun = 0;
@@ -50,9 +50,9 @@ void app_main(void)
 	// Initialise and start timer.
 	uint32_t ticks;
 	buttonTaskNextRun = HAL_GetTick() + BUTTON_TASK_PERIOD_TICKS;
-	joystickTaskNextRun = HAL_GetTick() + JOYSTICK_TASK_PERIOD_TICKS;
+	joystickTaskNextRun = HAL_GetTick() + JOYSTICK_TASK_PERIOD_TICKS + ADC_TASK_OFFSET;
 	uartTaskNextRun = HAL_GetTick() + UART_TASK_PERIOD_TICKS;
-	displayFSMTaskNextRun = HAL_GetTick() + DISPLAY_FSM_TASK_PERIOD_TICKS + DISPLAY_TASK_OFFSET;
+	displayFSMTaskNextRun = HAL_GetTick() + DISPLAY_FSM_TASK_PERIOD_TICKS + ADC_TASK_OFFSET;
 	adcTaskNextRun = HAL_GetTick() + ADC_TASK_PERIOD_TICKS;
 	buzzerTaskNextRun = HAL_GetTick() + BUZZER_TASK_PERIOD_TICKS;
 

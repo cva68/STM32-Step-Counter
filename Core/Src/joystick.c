@@ -18,7 +18,7 @@
 #define MIDDLE_ADC_VALUE 2047
 
 // Percentage distance the joystick must be moved before registering motion
-#define DRIFT_THRESHOLD 10
+#define DRIFT_THRESHOLD 20
 
 // Percentage distance the joystick must be moved before raising a UP/DOWN/L/R flag
 #define FLAG_RAISE_THRESHOLD 30

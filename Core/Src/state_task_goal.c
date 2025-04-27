@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "state_task_goal.h"
+#include "state_task_count.h"
 #include "pot.h"
 
 static uint16_t step_goal = 1000;
@@ -50,7 +51,8 @@ void modify_state_task_execute(void)
 void goal_state_task_execute(void)
 {
 	// State to display the step goal
-	static char goal[18];
-	snprintf(goal, sizeof(goal), "Goal: %u           ", step_goal);
-	ssd1306_WriteString(goal, Font_7x10, White);
+	static char percentage_goal[19];
+	uint16_t step_percentage = (get_step_count() * 100) / get_step_goal(); // avoid floats
+	snprintf(percentage_goal, sizeof(percentage_goal), "Goal: %u%% / %u     ", step_percentage, get_step_goal());
+	ssd1306_WriteString(percentage_goal, Font_7x10, White);
 }

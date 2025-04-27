@@ -22,7 +22,7 @@
 
 #define NUM_BUT_POLLS 3
 
-#define HOLD_THRESHOLD_MS 500
+#define HOLD_THRESHOLD_MS 1000
 #define RELEASE_THRESHOLD_MS 150
 
 #define BUTTON_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUTTON_TASK_FREQUENCY)
@@ -116,7 +116,6 @@ void buttons_init (void)
 // a flag is set. Set NUM_BUT_POLLS according to the polling rate.
 void buttons_update (void)
 {
-	static uint8_t dutyCycle = 0;
 	// Iterate through the buttons, updating button variables as required
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{
