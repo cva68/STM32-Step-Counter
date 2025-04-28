@@ -1,6 +1,6 @@
-../Core/Src/state_task_goal.c:19:6:set_step_goal	1
-../Core/Src/state_task_goal.c:24:10:get_step_goal	1
-../Core/Src/state_task_goal.c:29:6:increment_step_goal	1
-../Core/Src/state_task_goal.c:34:6:update_step_goal	1
-../Core/Src/state_task_goal.c:39:6:modify_state_task_execute	1
-../Core/Src/state_task_goal.c:50:6:goal_state_task_execute	1
+../Core/Src/state_task_goal.c:20:6:set_step_goal	1
+../Core/Src/state_task_goal.c:25:10:get_step_goal	1
+../Core/Src/state_task_goal.c:30:6:increment_step_goal	1
+../Core/Src/state_task_goal.c:35:6:update_step_goal	1
+../Core/Src/state_task_goal.c:40:6:modify_state_task_execute	1
+../Core/Src/state_task_goal.c:51:6:goal_state_task_execute	1

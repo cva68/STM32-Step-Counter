@@ -39,7 +39,9 @@ Core/Src/task_buttons.o: ../Core/Src/task_buttons.c \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h \
- ../Core/Inc/ssd1306_fonts.h
+ ../Core/Inc/ssd1306_fonts.h ../Core/Inc/task_display_fsm.h \
+ ../Core/Inc/joystick.h ../Core/Inc/gpio.h ../Core/Inc/main.h \
+ ../Core/Inc/state_task_count.h ../Core/Inc/state_task_distance.h
 ../Core/Inc/task_buttons.h:
 ../Core/Inc/buttons.h:
 ../Core/Inc/rgb.h:
@@ -85,3 +87,9 @@ Core/Src/task_buttons.o: ../Core/Src/task_buttons.c \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart_ex.h:
 ../Core/Inc/ssd1306_fonts.h:
+../Core/Inc/task_display_fsm.h:
+../Core/Inc/joystick.h:
+../Core/Inc/gpio.h:
+../Core/Inc/main.h:
+../Core/Inc/state_task_count.h:
+../Core/Inc/state_task_distance.h:

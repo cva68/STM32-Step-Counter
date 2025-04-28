@@ -45,6 +45,10 @@ void display_fsm_task_init(void)
 	ssd1306_WriteString("== STEP COUNTER ==", Font_7x10, White);
 }
 
+state_t get_display_state(void) {
+	return current_state;
+}
+
 void update_fsm_display(state_t state) {
 	// Set up the screen
 	ssd1306_SetCursor(0, 13);

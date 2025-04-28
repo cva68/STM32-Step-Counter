@@ -30,6 +30,8 @@ typedef enum {
 	STATE_TEST
 } state_t;
 
+state_t get_display_state(void);
+
 void display_fsm_task_init(void);
 
 void update_fsm_display(state_t state);
