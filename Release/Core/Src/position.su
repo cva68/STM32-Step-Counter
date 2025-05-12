@@ -1,0 +1,5 @@
+../Core/Src/position.c:19:6:position_init	8	static
+../Core/Src/position.c:26:9:get_filtered_x	8	static
+../Core/Src/position.c:32:9:get_filtered_y	8	static
+../Core/Src/position.c:38:9:get_filtered_z	8	static
+../Core/Src/position.c:44:10:get_mag	16	static

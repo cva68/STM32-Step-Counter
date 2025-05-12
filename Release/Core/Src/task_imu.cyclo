@@ -1,0 +1,2 @@
+../Core/Src/task_imu.c:21:6:imu_task_init	1
+../Core/Src/task_imu.c:25:6:imu_task_execute	5

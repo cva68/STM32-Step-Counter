@@ -32,6 +32,8 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_i2c_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_spi.h \
+ ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_spi_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h \
@@ -43,7 +45,8 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
  ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
  ../Core/Inc/ssd1306_fonts.h ../Core/Inc/state_task_goal.h \
  ../Core/Inc/state_task_count.h ../Core/Inc/state_task_distance.h \
- ../Core/Inc/task_buzzer.h ../Core/Inc/adc_controller.h ../Core/Inc/adc.h
+ ../Core/Inc/task_buzzer.h ../Core/Inc/task_imu.h ../Core/Inc/task_led.h \
+ ../Core/Inc/adc_controller.h ../Core/Inc/adc.h
 ../Core/Inc/task_adc.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
@@ -79,6 +82,8 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_i2c_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_spi.h:
+../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_spi_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_uart.h:
@@ -100,5 +105,7 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Inc/task_adc.h \
 ../Core/Inc/state_task_count.h:
 ../Core/Inc/state_task_distance.h:
 ../Core/Inc/task_buzzer.h:
+../Core/Inc/task_imu.h:
+../Core/Inc/task_led.h:
 ../Core/Inc/adc_controller.h:
 ../Core/Inc/adc.h:

@@ -11,13 +11,18 @@ C_SRCS += \
 ../Core/Src/buttons.c \
 ../Core/Src/buzzer.c \
 ../Core/Src/dma.c \
+../Core/Src/filter.c \
 ../Core/Src/gpio.c \
 ../Core/Src/i2c.c \
+../Core/Src/imu.c \
+../Core/Src/imu_lsm6ds.c \
 ../Core/Src/joystick.c \
 ../Core/Src/main.c \
+../Core/Src/position.c \
 ../Core/Src/pot.c \
 ../Core/Src/pwm.c \
 ../Core/Src/rgb.c \
+../Core/Src/spi.c \
 ../Core/Src/ssd1306.c \
 ../Core/Src/ssd1306_fonts.c \
 ../Core/Src/state_task_count.c \
@@ -33,7 +38,9 @@ C_SRCS += \
 ../Core/Src/task_buttons.c \
 ../Core/Src/task_buzzer.c \
 ../Core/Src/task_display_fsm.c \
+../Core/Src/task_imu.c \
 ../Core/Src/task_joystick.c \
+../Core/Src/task_led.c \
 ../Core/Src/task_uart.c \
 ../Core/Src/tim.c \
 ../Core/Src/uart_debugger.c \
@@ -46,13 +53,18 @@ OBJS += \
 ./Core/Src/buttons.o \
 ./Core/Src/buzzer.o \
 ./Core/Src/dma.o \
+./Core/Src/filter.o \
 ./Core/Src/gpio.o \
 ./Core/Src/i2c.o \
+./Core/Src/imu.o \
+./Core/Src/imu_lsm6ds.o \
 ./Core/Src/joystick.o \
 ./Core/Src/main.o \
+./Core/Src/position.o \
 ./Core/Src/pot.o \
 ./Core/Src/pwm.o \
 ./Core/Src/rgb.o \
+./Core/Src/spi.o \
 ./Core/Src/ssd1306.o \
 ./Core/Src/ssd1306_fonts.o \
 ./Core/Src/state_task_count.o \
@@ -68,7 +80,9 @@ OBJS += \
 ./Core/Src/task_buttons.o \
 ./Core/Src/task_buzzer.o \
 ./Core/Src/task_display_fsm.o \
+./Core/Src/task_imu.o \
 ./Core/Src/task_joystick.o \
+./Core/Src/task_led.o \
 ./Core/Src/task_uart.o \
 ./Core/Src/tim.o \
 ./Core/Src/uart_debugger.o \
@@ -81,13 +95,18 @@ C_DEPS += \
 ./Core/Src/buttons.d \
 ./Core/Src/buzzer.d \
 ./Core/Src/dma.d \
+./Core/Src/filter.d \
 ./Core/Src/gpio.d \
 ./Core/Src/i2c.d \
+./Core/Src/imu.d \
+./Core/Src/imu_lsm6ds.d \
 ./Core/Src/joystick.d \
 ./Core/Src/main.d \
+./Core/Src/position.d \
 ./Core/Src/pot.d \
 ./Core/Src/pwm.d \
 ./Core/Src/rgb.d \
+./Core/Src/spi.d \
 ./Core/Src/ssd1306.d \
 ./Core/Src/ssd1306_fonts.d \
 ./Core/Src/state_task_count.d \
@@ -103,7 +122,9 @@ C_DEPS += \
 ./Core/Src/task_buttons.d \
 ./Core/Src/task_buzzer.d \
 ./Core/Src/task_display_fsm.d \
+./Core/Src/task_imu.d \
 ./Core/Src/task_joystick.d \
+./Core/Src/task_led.d \
 ./Core/Src/task_uart.d \
 ./Core/Src/tim.d \
 ./Core/Src/uart_debugger.d \
@@ -117,7 +138,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/adc.cyclo ./Core/Src/adc.d ./Core/Src/adc.o ./Core/Src/adc.su ./Core/Src/adc_controller.cyclo ./Core/Src/adc_controller.d ./Core/Src/adc_controller.o ./Core/Src/adc_controller.su ./Core/Src/app.cyclo ./Core/Src/app.d ./Core/Src/app.o ./Core/Src/app.su ./Core/Src/buttons.cyclo ./Core/Src/buttons.d ./Core/Src/buttons.o ./Core/Src/buttons.su ./Core/Src/buzzer.cyclo ./Core/Src/buzzer.d ./Core/Src/buzzer.o ./Core/Src/buzzer.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/joystick.cyclo ./Core/Src/joystick.d ./Core/Src/joystick.o ./Core/Src/joystick.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/pot.cyclo ./Core/Src/pot.d ./Core/Src/pot.o ./Core/Src/pot.su ./Core/Src/pwm.cyclo ./Core/Src/pwm.d ./Core/Src/pwm.o ./Core/Src/pwm.su ./Core/Src/rgb.cyclo ./Core/Src/rgb.d ./Core/Src/rgb.o ./Core/Src/rgb.su ./Core/Src/ssd1306.cyclo ./Core/Src/ssd1306.d ./Core/Src/ssd1306.o ./Core/Src/ssd1306.su ./Core/Src/ssd1306_fonts.cyclo ./Core/Src/ssd1306_fonts.d ./Core/Src/ssd1306_fonts.o ./Core/Src/ssd1306_fonts.su ./Core/Src/state_task_count.cyclo ./Core/Src/state_task_count.d ./Core/Src/state_task_count.o ./Core/Src/state_task_count.su ./Core/Src/state_task_distance.cyclo ./Core/Src/state_task_distance.d ./Core/Src/state_task_distance.o ./Core/Src/state_task_distance.su ./Core/Src/state_task_goal.cyclo ./Core/Src/state_task_goal.d ./Core/Src/state_task_goal.o ./Core/Src/state_task_goal.su ./Core/Src/state_task_test.cyclo ./Core/Src/state_task_test.d ./Core/Src/state_task_test.o ./Core/Src/state_task_test.su ./Core/Src/stm32c0xx_hal_msp.cyclo ./Core/Src/stm32c0xx_hal_msp.d ./Core/Src/stm32c0xx_hal_msp.o ./Core/Src/stm32c0xx_hal_msp.su ./Core/Src/stm32c0xx_it.cyclo ./Core/Src/stm32c0xx_it.d ./Core/Src/stm32c0xx_it.o ./Core/Src/stm32c0xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32c0xx.cyclo ./Core/Src/system_stm32c0xx.d ./Core/Src/system_stm32c0xx.o ./Core/Src/system_stm32c0xx.su ./Core/Src/task_adc.cyclo ./Core/Src/task_adc.d ./Core/Src/task_adc.o ./Core/Src/task_adc.su ./Core/Src/task_buttons.cyclo ./Core/Src/task_buttons.d ./Core/Src/task_buttons.o ./Core/Src/task_buttons.su ./Core/Src/task_buzzer.cyclo ./Core/Src/task_buzzer.d ./Core/Src/task_buzzer.o ./Core/Src/task_buzzer.su ./Core/Src/task_display_fsm.cyclo ./Core/Src/task_display_fsm.d ./Core/Src/task_display_fsm.o ./Core/Src/task_display_fsm.su ./Core/Src/task_joystick.cyclo ./Core/Src/task_joystick.d ./Core/Src/task_joystick.o ./Core/Src/task_joystick.su ./Core/Src/task_uart.cyclo ./Core/Src/task_uart.d ./Core/Src/task_uart.o ./Core/Src/task_uart.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/uart_debugger.cyclo ./Core/Src/uart_debugger.d ./Core/Src/uart_debugger.o ./Core/Src/uart_debugger.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
+	-$(RM) ./Core/Src/adc.cyclo ./Core/Src/adc.d ./Core/Src/adc.o ./Core/Src/adc.su ./Core/Src/adc_controller.cyclo ./Core/Src/adc_controller.d ./Core/Src/adc_controller.o ./Core/Src/adc_controller.su ./Core/Src/app.cyclo ./Core/Src/app.d ./Core/Src/app.o ./Core/Src/app.su ./Core/Src/buttons.cyclo ./Core/Src/buttons.d ./Core/Src/buttons.o ./Core/Src/buttons.su ./Core/Src/buzzer.cyclo ./Core/Src/buzzer.d ./Core/Src/buzzer.o ./Core/Src/buzzer.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/filter.cyclo ./Core/Src/filter.d ./Core/Src/filter.o ./Core/Src/filter.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/imu.cyclo ./Core/Src/imu.d ./Core/Src/imu.o ./Core/Src/imu.su ./Core/Src/imu_lsm6ds.cyclo ./Core/Src/imu_lsm6ds.d ./Core/Src/imu_lsm6ds.o ./Core/Src/imu_lsm6ds.su ./Core/Src/joystick.cyclo ./Core/Src/joystick.d ./Core/Src/joystick.o ./Core/Src/joystick.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/position.cyclo ./Core/Src/position.d ./Core/Src/position.o ./Core/Src/position.su ./Core/Src/pot.cyclo ./Core/Src/pot.d ./Core/Src/pot.o ./Core/Src/pot.su ./Core/Src/pwm.cyclo ./Core/Src/pwm.d ./Core/Src/pwm.o ./Core/Src/pwm.su ./Core/Src/rgb.cyclo ./Core/Src/rgb.d ./Core/Src/rgb.o ./Core/Src/rgb.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/ssd1306.cyclo ./Core/Src/ssd1306.d ./Core/Src/ssd1306.o ./Core/Src/ssd1306.su ./Core/Src/ssd1306_fonts.cyclo ./Core/Src/ssd1306_fonts.d ./Core/Src/ssd1306_fonts.o ./Core/Src/ssd1306_fonts.su ./Core/Src/state_task_count.cyclo ./Core/Src/state_task_count.d ./Core/Src/state_task_count.o ./Core/Src/state_task_count.su ./Core/Src/state_task_distance.cyclo ./Core/Src/state_task_distance.d ./Core/Src/state_task_distance.o ./Core/Src/state_task_distance.su ./Core/Src/state_task_goal.cyclo ./Core/Src/state_task_goal.d ./Core/Src/state_task_goal.o ./Core/Src/state_task_goal.su ./Core/Src/state_task_test.cyclo ./Core/Src/state_task_test.d ./Core/Src/state_task_test.o ./Core/Src/state_task_test.su ./Core/Src/stm32c0xx_hal_msp.cyclo ./Core/Src/stm32c0xx_hal_msp.d ./Core/Src/stm32c0xx_hal_msp.o ./Core/Src/stm32c0xx_hal_msp.su ./Core/Src/stm32c0xx_it.cyclo ./Core/Src/stm32c0xx_it.d ./Core/Src/stm32c0xx_it.o ./Core/Src/stm32c0xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32c0xx.cyclo ./Core/Src/system_stm32c0xx.d ./Core/Src/system_stm32c0xx.o ./Core/Src/system_stm32c0xx.su ./Core/Src/task_adc.cyclo ./Core/Src/task_adc.d ./Core/Src/task_adc.o ./Core/Src/task_adc.su ./Core/Src/task_buttons.cyclo ./Core/Src/task_buttons.d ./Core/Src/task_buttons.o ./Core/Src/task_buttons.su ./Core/Src/task_buzzer.cyclo ./Core/Src/task_buzzer.d ./Core/Src/task_buzzer.o ./Core/Src/task_buzzer.su ./Core/Src/task_display_fsm.cyclo ./Core/Src/task_display_fsm.d ./Core/Src/task_display_fsm.o ./Core/Src/task_display_fsm.su ./Core/Src/task_imu.cyclo ./Core/Src/task_imu.d ./Core/Src/task_imu.o ./Core/Src/task_imu.su ./Core/Src/task_joystick.cyclo ./Core/Src/task_joystick.d ./Core/Src/task_joystick.o ./Core/Src/task_joystick.su ./Core/Src/task_led.cyclo ./Core/Src/task_led.d ./Core/Src/task_led.o ./Core/Src/task_led.su ./Core/Src/task_uart.cyclo ./Core/Src/task_uart.d ./Core/Src/task_uart.o ./Core/Src/task_uart.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/uart_debugger.cyclo ./Core/Src/uart_debugger.d ./Core/Src/uart_debugger.o ./Core/Src/uart_debugger.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
 
 .PHONY: clean-Core-2f-Src
 

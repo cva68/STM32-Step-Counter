@@ -8,16 +8,19 @@
 #ifndef FILTER_H_
 #define FILTER_H_
 
-#define N 4
-
 #include <stdint.h>
 
+#define N 8  // Number of taps
 
 typedef struct {
-	uint16_t current_values[N] = {0};
-	uint8_t index = 0;
-} CircBuffer_t;
+    int16_t buffer[N];
+    uint8_t index;
+} Filter_t;
 
-uint16_t fir_filter(uint16_t input);
+// Initializes the filter (zeros buffer and index)
+void filter_init(Filter_t* filter);
 
-#endif /* INC_FILTER_H_ */
+// Applies the filter to a new input value
+int16_t filter_apply(Filter_t* filter, int16_t input);
+
+#endif /* FILTER_H_ */

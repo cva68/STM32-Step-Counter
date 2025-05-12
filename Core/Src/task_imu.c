@@ -6,19 +6,40 @@
  */
 
 #include "task_imu.h"
-#include "imu.h"
 #include "usart.h"
+#include "position.h"
+#include "state_task_count.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+#define STEP_THRESHOLD 280000000
+#define HYSTERESIS_LOWER 269000000
+#define COOLDOWN_TICKS 20
+
+static uint8_t cooldown = 0;
 
 void imu_task_init(void){
-	imu_init();
+	position_init();
 }
 
 void imu_task_execute(void) {
-	int16_t z_acc = get_z_acc();
-	char serial[14];
-	int len = snprintf(serial, sizeof(serial), "%d\r\n", z_acc);
-	HAL_UART_Transmit(&huart2, (int8_t*)serial, len, 10000);
+	static bool hysteresis = false;
+	uint32_t mag = get_mag();
+	//char serial[14];
+	//int len = snprintf(serial, sizeof(serial), "%d\r\n", mag);
+	//HAL_UART_Transmit(&huart2, (int8_t*)serial, len, 10000);
+
+    if (cooldown > 0) {
+        cooldown--;
+        return;
+    }
+
+	if (mag < HYSTERESIS_LOWER) {
+		hysteresis = false;
+	}
+	if (mag > STEP_THRESHOLD && !hysteresis) {
+		hysteresis = true;
+		increment_steps(1);
+		cooldown = COOLDOWN_TICKS;  // Prevent double-counting
+	}
 }

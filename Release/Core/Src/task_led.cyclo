@@ -1,0 +1,2 @@
+../Core/Src/task_led.c:13:6:led_task_init	1
+../Core/Src/task_led.c:17:6:led_task_execute	1
