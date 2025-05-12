@@ -5,23 +5,26 @@
  *      Author: cva68
  */
 
+#include "filter.h"
 #include <stdio.h>
 #include <stdint.h>
-#define N 4 // Number of samples in the circular buffer
+#define N 8 // Number of samples in the circular buffer
 
-uint16_t coeffs[N] =  {1, 1, 1, 1};
+void filter_init(Filter_t* filter) {
+    for (int i = 0; i < N; i++) {
+        filter->buffer[i] = 0;
+    }
+    filter->index = 0;
+}
 
-// FIR Filter function
-uint16_t fir_filter(uint16_t input) {
-	static struct CircBuffer_t buffer;
-	uint16_t output = 0;
-	buffer.buffer[buffer.index] = input;
+int16_t filter_apply(Filter_t* filter, int16_t input) {
+    filter->buffer[filter->index] = input;
+    filter->index = (filter->index + 1) % N;
 
-	// Compute FIR filter output
-	for (count_t i = 0; i < N; i ++) {
-		output += coeffs[i] * buffer.buffer[(buffer.index - i + N) % N];
-	}
+    int32_t sum = 0;
+    for (int i = 0; i < N; i++) {
+        sum += filter->buffer[i];  // All coefficients are 1
+    }
 
-	buffer.index = (buffer.index + 1) % N;
-	return output / N;
+    return sum / N; //Change so that when there are empty values N is equal to the amount of filled spaces
 }

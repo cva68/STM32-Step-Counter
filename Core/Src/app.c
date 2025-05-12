@@ -17,6 +17,7 @@
 #include "task_display_fsm.h"
 #include "task_buzzer.h"
 #include "task_imu.h"
+#include "task_led.h"
 #include "adc_controller.h"
 
 #define TICK_FREQUENCY_HZ 1000
@@ -28,7 +29,8 @@
 #define DISPLAY_FSM_TASK_FREQUENCY 6
 #define ADC_TASK_FREQUENCY 10
 #define BUZZER_TASK_FREQUENCY 6
-#define IMU_TASK_FREQUENCY 6
+#define IMU_TASK_FREQUENCY 50
+#define LED_TASK_FREQUENCY 6
 
 #define BUTTON_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUTTON_TASK_FREQUENCY)
 #define JOYSTICK_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/JOYSTICK_TASK_FREQUENCY)
@@ -37,6 +39,7 @@
 #define ADC_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/ADC_TASK_FREQUENCY)
 #define BUZZER_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/BUZZER_TASK_FREQUENCY)
 #define IMU_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/IMU_TASK_FREQUENCY)
+#define LED_TASK_PERIOD_TICKS (TICK_FREQUENCY_HZ/LED_TASK_FREQUENCY)
 
 // Delay some tasks until ADC transients have dissipated
 #define ADC_TASK_OFFSET 50
@@ -48,6 +51,7 @@ static uint32_t displayFSMTaskNextRun = 0;
 static uint32_t adcTaskNextRun = 0;
 static uint32_t buzzerTaskNextRun = 0;
 static uint32_t imuTaskNextRun = 0;
+static uint32_t ledTaskNextRun = 0;
 
 void app_main(void)
 {
@@ -60,12 +64,14 @@ void app_main(void)
 	adcTaskNextRun = HAL_GetTick() + ADC_TASK_PERIOD_TICKS;
 	buzzerTaskNextRun = HAL_GetTick() + BUZZER_TASK_PERIOD_TICKS;
 	imuTaskNextRun = HAL_GetTick() + IMU_TASK_PERIOD_TICKS;
+	ledTaskNextRun = HAL_GetTick() + LED_TASK_PERIOD_TICKS;
 
 	// Initialise tasks.
 	buttons_task_init();
 	display_fsm_task_init();
 	buzzer_task_init();
 	imu_task_init();
+	led_task_init();
 
 	// Periodically execute tasks at the frequency defined above.
 	while(1)
@@ -105,6 +111,11 @@ void app_main(void)
 		if (ticks > imuTaskNextRun){
 			imu_task_execute();
 			imuTaskNextRun += IMU_TASK_PERIOD_TICKS;
+		}
+
+		if (ticks > ledTaskNextRun){
+			led_task_execute();
+			ledTaskNextRun += LED_TASK_PERIOD_TICKS;
 		}
 	}
 }

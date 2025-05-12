@@ -28,7 +28,7 @@ uint16_t get_step_goal() {
 }
 
 void increment_step_goal(uint16_t by) {
-	// Set the step goal
+	// Increment the step goal
     step_goal += by;
 }
 

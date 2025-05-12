@@ -1,0 +1,4 @@
+../Core/Src/imu.c:10:6:imu_init	1
+../Core/Src/imu.c:15:9:get_x_acc	1
+../Core/Src/imu.c:24:9:get_y_acc	1
+../Core/Src/imu.c:33:9:get_z_acc	1
