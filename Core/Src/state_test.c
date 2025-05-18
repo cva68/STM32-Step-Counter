@@ -1,17 +1,17 @@
 /*
- * state_task_test.c
+ * state_test.c
  *
- * Contains functionality for the test state of the FSM
+ * Functionality for the test mode of the step counter, allowing modification of the
+ * current step count.
  *
  *  Created on: Apr 20, 2025
- *      Author: cva68
+ *      Authors: C. Varney, A. Walker
  */
 
 #include <stdbool.h>
 #include <stdio.h>
-#include "state_task_test.h"
-#include "state_task_count.h" // For getting current number of steps
-#include "state_task_goal.h" // For getting current goal
+#include "state_test.h"
+#include "steps.h"
 #include "joystick.h"
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
@@ -26,9 +26,10 @@
 
 static bool skip_step = false;
 
-void test_state_task_execute(void)
+// Take joystick input, and update the displayed goal accordingly
+void state_test_executeTask(void)
 {
-	struct percentage_coords joystick_pos = get_percentage_coordinates();
+	struct percentage_coords joystick_pos = joystick_getPercentageCoords();
 	int y = joystick_pos.y;
 
 	// To halve the rate of change if the joystick hasn't exceeded a threshold
@@ -40,8 +41,8 @@ void test_state_task_execute(void)
 		skip_step = true;
 	}
 
-	uint16_t current_goal = get_step_goal();
-	uint16_t current_steps = get_step_count();
+	uint16_t current_goal = steps_getStepGoal();
+	uint16_t current_steps = steps_getStepCount();
 	uint16_t old_steps = current_steps; // for underflow detection without using negatives
 
 	// Exponential rate of change for finer adjustment
@@ -62,11 +63,12 @@ void test_state_task_execute(void)
 	if (joystick_pos.y < 0 && current_steps > current_goal) current_steps = current_goal; // Exceeded goal
 	else if (joystick_pos.y > 0 && current_steps > old_steps) current_steps = 0; // Underflow
 
-	set_step_count(current_steps);
+	steps_setStepCount(current_steps);
 
 	// Display the step goal
 	static char new_step_count[19];
-	snprintf(new_step_count, sizeof(new_step_count), "New Steps: %u       ", current_steps);
+	snprintf(new_step_count, sizeof(new_step_count), "New Steps: %u       ",
+			 current_steps);
 	ssd1306_WriteString(new_step_count, Font_7x10, White);
-}
+} // state_test_executeTask
 

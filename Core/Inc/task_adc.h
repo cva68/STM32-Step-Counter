@@ -1,16 +1,18 @@
 /*
  * task_adc.h
  *
+ * Task to update the ADC values periodically.
+ *
  *  Created on: Apr 14, 2025
- *      Author: cva68
+ *      Authors: C. Varney, A. Walker
  */
 
 #ifndef TASK_POT_H
 #define TASK_POT_H
 
-#include "gpio.h"
+#include "task_adc.h"
+#include "adc_controller.h"
 
-void adc_task_execute(void);
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
+void task_adc_executeTask(void);
 
 #endif /* INC_TASK_POT_H */

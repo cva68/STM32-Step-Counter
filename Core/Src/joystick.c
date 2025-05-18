@@ -1,10 +1,12 @@
 /*
  * joystick.c
  *
- * Driver for the JoyStick module of the RCAP Expansion Board.
+ * Driver for the joystick module of the RCAP Expansion Board. Can be used in either
+ * a "analog" mode (% values in X and Y direction), or "digital" mode (boolean flags
+ * raised for up, down, left and right directions)
  *
  *  Created on: Mar 5, 2025
- *      Author: cva68
+ *  	Authors: C. Varney, A. Walker
  */
 
 #include <stdio.h>
@@ -15,9 +17,10 @@
 #include "joystick.h"
 #include "adc_controller.h"
 
+// Rest position of the joystick
 #define MIDDLE_ADC_VALUE 2047
 
-// Percentage distance the joystick must be moved before registering motion
+// Percentage distance the joystick must be moved before registering any motion
 #define DRIFT_THRESHOLD 20
 
 // Percentage distance the joystick must be moved before raising a UP/DOWN/L/R flag
@@ -25,10 +28,11 @@
 
 static struct joystick_position_flags flags = {0};
 
-struct percentage_coords get_percentage_coordinates(void) {
+struct percentage_coords joystick_getPercentageCoords(void)
+{
 	// Convert raw values to percentage values, stored in percentage_coords struct
 	struct percentage_coords output;
-	uint16_t* raw_values = get_adc_values();
+	uint16_t* raw_values = adcController_getValues();
 	output.x = (((int16_t)raw_values[2] - MIDDLE_ADC_VALUE) * 100) / MIDDLE_ADC_VALUE;
 	output.y = (((int16_t)raw_values[1] - MIDDLE_ADC_VALUE) * 100) / MIDDLE_ADC_VALUE;
 
@@ -39,11 +43,12 @@ struct percentage_coords get_percentage_coordinates(void) {
 	return output;
 }
 
-void update_joystick(void) {
+void joystick_update(void)
+{
 	// Update the stored position flags
 	// These get reset when get_joystick_position_flags is called
 	struct percentage_coords percentages;
-	percentages = get_percentage_coordinates();
+	percentages = joystick_getPercentageCoords();
 
 	if (percentages.x > FLAG_RAISE_THRESHOLD) {
 		flags.left = true;
@@ -58,7 +63,8 @@ void update_joystick(void) {
 	}
 }
 
-struct joystick_position_flags get_joystick_flags(void) {
+struct joystick_position_flags joystick_getFlags(void)
+{
 	// Return any raised position flags
 
 	// Store the current flags

@@ -1,15 +1,23 @@
 /*
- * task_led.h
+ * task_led.g
+ *
+ * Task to turn on LEDs as the step goal approaches completion. DS4 lights up gradually
+ * with PWM from 0% to 25% completion, DS1-DS3 turn on for the remaining 25% increments.
  *
  *  Created on: May 12, 2025
- *      Author: awa158
+ *      Authors: C. Varney, A. Walker
  */
 
-#ifndef TASK_LED_H_
-#define TASK_LED_H_
+#ifndef TASK_LED_H
+#define TASK_LED_H
 
-void led_task_init(void);
-void led_task_execute(void);
+#include <stdint.h>
+#include "gpio.h"
+#include "pwm.h"
+#include "steps.h"
+
+void task_led_initTask(void);
+void task_led_executeTask(void);
 
 
-#endif /* INC_TASK_LED_H_ */
+#endif // TASK_LED_H

@@ -1,43 +1,35 @@
 /*
- * task_fsm.c
+ * task_display_fsm.c
  *
- * Task to update the display based on an FSM, with states based on joystick / button inputs
+ * Task to switch between FSM states based on joystick / button inputs.
  *
  *  Created on: Apr 9, 2025
- *      Author: connor
+ *      Authors: C. Varney, A. Walker
  */
 
+#include <stdio.h>
+#include <stdbool.h>
+
+#include "task_fsm.h"
 #include "joystick.h"
 #include "buttons.h"
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 #include "ssd1306_conf.h"
-#include <stdio.h>
-#include <stdbool.h>
 
-#include "state_task_goal.h"
-#include "state_task_count.h"
-#include "state_task_distance.h"
-#include "state_task_test.h"
+#include "state_count.h"
+#include "state_distance.h"
+#include "state_goal.h"
+#include "state_test.h"
 
+// Minimum time to stay in each state
 #define STATE_CHANGE_DELAY 400 // Ticks
-
-
-typedef enum {
-    STATE_STEPS,
-    STATE_DISTANCE,
-    STATE_GOAL,
-    STATE_MODIFY_GOAL,
-	STATE_TEST
-} state_t;
 
 state_t current_state = STATE_STEPS;
 state_t prev_state = STATE_STEPS;
 static uint32_t fsmTaskNextRun = 0;
 
-bool joystick_release = true;
-
-void display_fsm_task_init(void)
+void task_fsm_initTask(void)
 {
 	ssd1306_Init();
 	ssd1306_Fill(Black);
@@ -45,44 +37,41 @@ void display_fsm_task_init(void)
 	ssd1306_WriteString("== STEP COUNTER ==", Font_7x10, White);
 }
 
-state_t get_display_state(void) {
-	return current_state;
-}
-
-void update_fsm_display(state_t state) {
+void task_fsm_updateDisplay(state_t state)
+{
 	// Set up the screen
 	ssd1306_SetCursor(0, 13);
 
 	// Call the function associated with this state
 	switch(state) {
 		case STATE_STEPS:
-			steps_state_task_execute();
+			state_count_executeTask();
 			break;
 		case STATE_DISTANCE:
-			distance_state_task_execute();
+			state_distance_executeTask();
 			break;
 		case STATE_GOAL:
-			goal_state_task_execute();
+			state_goal_executeDisplayTask();
 			break;
 		case STATE_MODIFY_GOAL:
-			modify_state_task_execute();
+			state_goal_executeModifyTask();
 			break;
 		case STATE_TEST:
 			//ssd1306_WriteString("Test Mode       ", Font_7x10, White);
-			test_state_task_execute();
+			state_test_executeTask();
 			break;
 	}
-
 	ssd1306_UpdateScreen();
 }
 
-void display_fsm_task_execute(void) {
+void task_fsm_taskExecute(void)
+{
 	// Task to be called by the scheduler, to move between FSM states
 
 	// Pull flags from the joystick and modules
 	// This is done regardless of whether fsmTaskNextRun has elapsed, as the
 	// flags must be cleared at the same rate this task is executed at.
-	struct joystick_position_flags joystick_position = get_joystick_flags();
+	struct joystick_position_flags joystick_position = joystick_getFlags();
 	buttonState_t joystickButtonState = buttons_checkButton(JOYSTICK);
 	buttonState_t SW2ButtonState = buttons_checkButton(DOWN);
 
@@ -99,7 +88,7 @@ void display_fsm_task_execute(void) {
 
 			// Unit switch transition
 			if (joystick_position.up) {
-				toggle_step_unit();
+				state_count_toggleUnit();
 				// Although not a state change, we should wait before accepting
 				// another input.
 				fsmTaskNextRun = HAL_GetTick() + STATE_CHANGE_DELAY;
@@ -114,7 +103,7 @@ void display_fsm_task_execute(void) {
 
 			// Unit switch transition
 			if (joystick_position.up) {
-				toggle_distance_unit();
+				state_distance_toggleUnit();
 				// Although not a state change, we should wait before accepting
 				// another input.
 				fsmTaskNextRun = HAL_GetTick() + STATE_CHANGE_DELAY;
@@ -131,7 +120,7 @@ void display_fsm_task_execute(void) {
 		case STATE_MODIFY_GOAL:
 			if (joystickButtonState == HELD){
 				current_state = STATE_GOAL;
-				update_step_goal();
+				state_goal_updateGoal();
 			} else if (joystickButtonState == PUSHED) current_state = STATE_GOAL;
 			break;
 
@@ -148,7 +137,5 @@ void display_fsm_task_execute(void) {
 	}
 
 	// Call the display function associated with this state
-	update_fsm_display(current_state);
-
-}
-
+	task_fsm_updateDisplay(current_state);
+} // task_fsm_taskExecute

@@ -1,10 +1,12 @@
 /*
  * joystick.h
  *
- * Driver for the JoyStick module of the RCAP Expansion Board.
+ * Driver for the joystick module of the RCAP Expansion Board. Can be used in either
+ * a "analog" mode (% values in X and Y direction), or "digital" mode (boolean flags
+ * raised for up, down, left and right directions)
  *
  *  Created on: Mar 5, 2025
- *      Author: cva68
+ *  	Authors: C. Varney, A. Walker
  */
 
 #ifndef JOYSTICK_H
@@ -30,8 +32,8 @@ struct joystick_position_flags
 };
 
 
-void update_joystick(void);
-struct percentage_coords get_percentage_coordinates(void);
-struct joystick_position_flags get_joystick_flags(void);
+void joystick_update(void);
+struct percentage_coords joystick_getPercentageCoords(void);
+struct joystick_position_flags joystick_getFlags(void);
 
 #endif // JOYSTICK_H

@@ -5,7 +5,7 @@
 //
 // Support for a set of FOUR specific buttons on the NUCLEO boards.
 // ENCE361 sample code.
-// The buttons are UP/DOWN/LEFT/RIGHT.
+// The buttons are UP/DOWN/LEFT/RIGHT (now includes the joystick button).
 //
 // Created by P.J. Bones, UC ECE
 // Updated by Le Yang & F. Youssif, UC ECE.
@@ -191,7 +191,7 @@ void buttons_update (void)
         			break; // Transitioning out of PUSHED, DOUBLE or HOLD is handled by checkButton.
        	}
 	}
-}
+} // buttons_update
 
 
 
