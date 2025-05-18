@@ -15,7 +15,8 @@
 
 #define BUZZER_TIMER_LENGTH 10
 
-void task_buzzer_initTask(void) {
+void task_buzzer_initTask(void)
+{
 	buzzer_init();
 }
 

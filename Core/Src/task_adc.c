@@ -11,6 +11,7 @@
 #include "task_adc.h"
 #include "adc_controller.h"
 
-void task_adc_executeTask(void) {
+void task_adc_executeTask(void)
+{
 	adcController_update();
 }

@@ -12,12 +12,14 @@
 #include "task_buttons.h"
 #include "buttons.h"
 
-void task_buttons_initTask(void) {
+void task_buttons_initTask(void)
+{
 	// Initialise the upstream button driver, enable all RGB LED colour channels.
 	buttons_init();
 }
 
-void task_buttons_executeTask(void) {
+void task_buttons_executeTask(void)
+{
 	// Update the button flags
 	buttons_update();
 }

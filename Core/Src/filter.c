@@ -16,7 +16,8 @@
 #define NUM_SAMPLES 8 // Number of samples in the circular buffer
 
 // Initialise the struct
-void filter_init(Filter_t* filter) {
+void filter_init(Filter_t* filter)
+{
     for (int i = 0; i < NUM_SAMPLES; i++) {
         filter->buffer[i] = 0;
     }
@@ -25,7 +26,8 @@ void filter_init(Filter_t* filter) {
 
 // Takes in a new reading, and returns the filtered reading after
 // said new reading is added to the buffer.
-int16_t filter_apply(Filter_t* filter, int16_t input) {
+int16_t filter_apply(Filter_t* filter, int16_t input)
+{
     // Add the new value at the current index, then move the index
     filter->buffer[filter->index] = input;
     filter->index = (filter->index + 1) % NUM_SAMPLES;

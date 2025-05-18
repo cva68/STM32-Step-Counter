@@ -37,7 +37,8 @@ void task_fsm_initTask(void)
 	ssd1306_WriteString("== STEP COUNTER ==", Font_7x10, White);
 }
 
-void task_fsm_updateDisplay(state_t state) {
+void task_fsm_updateDisplay(state_t state)
+{
 	// Set up the screen
 	ssd1306_SetCursor(0, 13);
 
@@ -63,7 +64,8 @@ void task_fsm_updateDisplay(state_t state) {
 	ssd1306_UpdateScreen();
 }
 
-void task_fsm_taskExecute(void) {
+void task_fsm_taskExecute(void)
+{
 	// Task to be called by the scheduler, to move between FSM states
 
 	// Pull flags from the joystick and modules
@@ -136,4 +138,4 @@ void task_fsm_taskExecute(void) {
 
 	// Call the display function associated with this state
 	task_fsm_updateDisplay(current_state);
-} //task_fsm_taskExecute
+} // task_fsm_taskExecute

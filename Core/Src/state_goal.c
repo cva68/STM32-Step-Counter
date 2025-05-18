@@ -18,7 +18,8 @@
 
 static uint16_t new_goal; // When modifying the goal, store the value here
 
-void state_goal_updateGoal() {
+void state_goal_updateGoal()
+{
 	// Transfer the static new_goal value to the actual step_goal
 	steps_setStepGoal(new_goal);
 }

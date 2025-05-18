@@ -17,7 +17,8 @@
 // Boolean for selecting units (count/%, km/yd)
 static bool steps_as_percentage = false;
 
-void state_count_toggleUnit(void) {
+void state_count_toggleUnit(void)
+{
 	steps_as_percentage = !(steps_as_percentage);
 }
 

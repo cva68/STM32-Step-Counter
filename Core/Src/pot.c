@@ -18,13 +18,15 @@
 #include "pot.h"
 #include "adc_controller.h"
 
-uint16_t pot_getRawValue(void) {
+uint16_t pot_getRawValue(void)
+{
 	// 0th returned ADC value is the potentiometer
 	uint16_t vr1_adc = adcController_getValues()[0];
 	return vr1_adc;
 }
 
-uint16_t pot_getScaledValue(void) {
+uint16_t pot_getScaledValue(void)
+{
 	// Scale the ADC value to a number between 500 and 15,000
 	uint16_t new_goal = ((GOAL_RANGE * (pot_getRawValue() - ADC_MIN)) / ADC_RANGE) + GOAL_MIN; // Convert ADC to goal value
 	new_goal = (new_goal / 100) * 100; // Round down to nearest 100

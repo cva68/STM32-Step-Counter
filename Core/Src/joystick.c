@@ -28,7 +28,8 @@
 
 static struct joystick_position_flags flags = {0};
 
-struct percentage_coords joystick_getPercentageCoords(void) {
+struct percentage_coords joystick_getPercentageCoords(void)
+{
 	// Convert raw values to percentage values, stored in percentage_coords struct
 	struct percentage_coords output;
 	uint16_t* raw_values = adcController_getValues();
@@ -42,7 +43,8 @@ struct percentage_coords joystick_getPercentageCoords(void) {
 	return output;
 }
 
-void joystick_update(void) {
+void joystick_update(void)
+{
 	// Update the stored position flags
 	// These get reset when get_joystick_position_flags is called
 	struct percentage_coords percentages;
@@ -61,7 +63,8 @@ void joystick_update(void) {
 	}
 }
 
-struct joystick_position_flags joystick_getFlags(void) {
+struct joystick_position_flags joystick_getFlags(void)
+{
 	// Return any raised position flags
 
 	// Store the current flags

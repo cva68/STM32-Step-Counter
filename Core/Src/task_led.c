@@ -19,7 +19,8 @@ uint16_t completion;
 uint16_t current_goal;
 uint16_t duty_cycle;
 
-void task_led_initTask(void) {
+void task_led_initTask(void)
+{
 	// Enable GPIO outputs, with PWM on DS4
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET );
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET );
@@ -27,7 +28,8 @@ void task_led_initTask(void) {
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
 }
 
-void task_led_executeTask(void) {
+void task_led_executeTask(void)
+{
 	current_count = steps_getStepCount();
 	current_goal = steps_getStepGoal();
 	completion = steps_getGoalPercentage();

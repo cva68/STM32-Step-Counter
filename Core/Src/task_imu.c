@@ -32,11 +32,13 @@
 
 static uint8_t cooldown = 0;
 
-void task_imu_initTask(void){
+void task_imu_initTask(void)
+{
 	imu_init();
 }
 
-void task_imu_executeTask(void) {
+void task_imu_executeTask(void)
+{
 	static bool hysteresis = false;
 	uint32_t mag = imu_getMagnitude();
 	uint16_t z_acceleration = imu_getFilteredAcceleration(Z);

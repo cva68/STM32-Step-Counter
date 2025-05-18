@@ -12,7 +12,8 @@
 #include "task_joystick.h"
 #include "joystick.h"
 
-void task_joystick_executeTask(void) {
+void task_joystick_executeTask(void)
+{
 	// Update the ADC values of the joystick X and Y axis inputs
 	joystick_update();
 }

@@ -22,7 +22,8 @@
 // Boolean for selecting units (km/yd)
 static bool distance_in_yards = false;
 
-void state_distance_toggleUnit(void) {
+void state_distance_toggleUnit(void)
+{
 	distance_in_yards = !(distance_in_yards);
 }
 
