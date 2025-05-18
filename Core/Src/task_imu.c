@@ -25,7 +25,7 @@
 // Range around Z=1G to reject step input (i.e. try avoid
 // counting steps when the device is sitting on a flat surface
 #define Z_REJECTION_MIN 15600
-#define Z_REJECTION_MAX 17000
+#define Z_REJECTION_MAX 16800
 
 // Minimum time between registering steps
 #define COOLDOWN_TICKS 20 // ticks
