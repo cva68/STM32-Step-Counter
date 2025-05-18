@@ -6,52 +6,93 @@
  */
 #include "imu.h"
 #include "imu_lsm6ds.h"
+#include "filter.h"
 
-#define X_OFFSET -740
-#define Y_OFFSET -1555
-#define Z_OFFSET 310
-#define X_SCALE  976 // * 10 ^ -3
-#define Y_SCALE  945 // * 10 ^ -3
-#define Z_SCALE  966 // * 10 ^ -3
-#define DIVIDER 1000
+// X, Y, Z
+#define NUM_AXIS 3
+
+// Instead of storing large axisProperties_t.scale values,
+// we store smaller integers then divide by this value.
+#define SCALE_DIVIDER 1000 
+
+Filter_t xFilter;
+Filter_t yFilter;
+Filter_t zFilter;
+
+// Measurements were taken to find the zero-offsets and scales required to
+// ensure acceleration measurements in the X, Y and Z directions are all consistent,
+// w.r.t 0 and 1G.
+axisProperties_t axis_properties[NUM_AXIS] =
+{
+		// X direction
+		[X] = {
+			.offset = -740,
+            .scale = 976,  // * 10 ^ -3
+            .low_byte = OUTX_L_XL,
+            .high_byte = OUTX_H_XL,
+			.filter = &xFilter
+		},
+
+		// Y direction
+		[Y] = {
+			.offset = -1555,
+            .scale = 945,  // * 10 ^ -3
+            .low_byte = OUTY_L_XL,
+            .high_byte = OUTY_H_XL,
+			.filter = &yFilter
+		},
+
+	    // Z direction
+		[Z] =
+		{
+			.offset = 310,
+            .scale = 966,  // * 10 ^ -3
+            .low_byte = OUTZ_L_XL,
+            .high_byte = OUTZ_H_XL,
+			.filter = &zFilter
+		}
+};
 
 void imu_init(void){
-	// Enable accelerometer with high performance
+	// Enable accelerometer
 	imu_lsm6ds_write_byte(CTRL1_XL, CTRL1_XL_HIGH_PERFORMANCE);
+
+    // Set up filters for each accelerometer axis
+    for (int i = 0; i < NUM_AXIS; i++)
+	{
+		filter_init(axis_properties[i].filter);
+	}
 }
 
-int16_t get_x_acc(void) {
-    uint8_t acc_x_low = imu_lsm6ds_read_byte(OUTX_L_XL); // Low byte
-    uint8_t acc_x_high = imu_lsm6ds_read_byte(OUTX_H_XL); // High byte
+int16_t get_raw_acceleration(axis_t axis)
+{
+    uint8_t acc_low = imu_lsm6ds_read_byte(axis_properties[axis].low_byte); // Low byte
+    uint8_t acc_high = imu_lsm6ds_read_byte(axis_properties[axis].high_byte); // High byte
 
-    int32_t acc_x = (int16_t)((uint16_t)acc_x_high << 8) | acc_x_low;
-    acc_x -= X_OFFSET;
-    acc_x *= X_SCALE;
-    acc_x /= DIVIDER;
+    int32_t acceleration = (int16_t)((uint16_t)acc_high << 8) | acc_low;
+    acceleration -= axis_properties[axis].offset;
+    acceleration *= axis_properties[axis].scale;
+    acceleration /= SCALE_DIVIDER;
 
-    return (int16_t) acc_x;
+    return (int16_t) acceleration;
 }
 
-int16_t get_y_acc(void) {
-    uint8_t acc_y_low = imu_lsm6ds_read_byte(OUTY_L_XL); // Low byte
-    uint8_t acc_y_high = imu_lsm6ds_read_byte(OUTY_H_XL); // High byte
-
-    int32_t acc_y = (int16_t)((uint16_t)acc_y_high << 8) | acc_y_low;
-    acc_y -= Y_OFFSET;
-    acc_y *= Y_SCALE;
-    acc_y /= DIVIDER;
-
-    return (int16_t) acc_y;
+int16_t get_filtered_acceleration(axis_t axis)
+{
+	int16_t acc = get_raw_acceleration(axis);
+	int16_t acc_filtered = filter_apply(axis_properties[axis].filter, acc);
+	return acc_filtered;
 }
 
-int16_t get_z_acc(void) {
-    uint8_t acc_z_low = imu_lsm6ds_read_byte(OUTZ_L_XL); // Low byte
-    uint8_t acc_z_high = imu_lsm6ds_read_byte(OUTZ_H_XL); // High byte
+uint32_t get_magnitude(void) {
+    int32_t acceleration_magnitude  = 0;
+    int16_t this_acceleration;
 
-    int32_t acc_z = (int16_t)((uint16_t)acc_z_high << 8) | acc_z_low;
-    acc_z -= Z_OFFSET;
-    acc_z *= Z_SCALE;
-    acc_z /= DIVIDER;
+    for (int i = 0; i < NUM_AXIS; i++)
+	{
+		this_acceleration = get_filtered_acceleration(i);
+        acceleration_magnitude += this_acceleration * this_acceleration;
+	}
 
-    return (int16_t) acc_z;
+	return acceleration_magnitude;
 }

@@ -13,7 +13,7 @@
 #include "state_task_goal.h" // For reading step goal
 
 // Define conversion rates
-#define CM_PER_STEP 80
+#define CM_PER_STEP 90
 #define KILOMETRES_TO_YARDS 1093
 
 // Variable to store step count

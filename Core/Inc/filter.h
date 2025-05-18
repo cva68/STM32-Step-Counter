@@ -7,13 +7,12 @@
 
 #ifndef FILTER_H_
 #define FILTER_H_
+#define NUM_TAPS 8  // Number of taps
 
 #include <stdint.h>
 
-#define N 8  // Number of taps
-
 typedef struct {
-    int16_t buffer[N];
+    int16_t buffer[NUM_TAPS];
     uint8_t index;
 } Filter_t;
 
