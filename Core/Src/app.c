@@ -71,7 +71,7 @@ void app_main(void)
 	// Initialise tasks.
 	task_buttons_initTask();
 	task_fsm_initTask();
-	task_buttons_initTask();
+	task_buzzer_initTask();
 	task_imu_initTask();
 	task_led_initTask();
 
