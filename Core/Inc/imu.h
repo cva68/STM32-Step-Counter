@@ -1,12 +1,16 @@
 /*
  * imu.h
  *
+ * IMU Abstraction. Allows getting raw or filtered acceleration in each direction axis_t (X, Y or Z).
+ * Each axis has an associated Filter_t, and every call to imu_getFilteredAcceleration will populate
+ * the circular buffer of this filter.
+ *
  *  Created on: May 5, 2025
- *      Author: awa158
+ *      Authors: C. Varney, A. Walker
  */
 
-#ifndef INC_IMU_H_
-#define INC_IMU_H_
+#ifndef IMU_H
+#define IMU_H
 
 #include <stdint.h>
 #include "imu.h"
@@ -26,8 +30,8 @@ typedef struct {
 } axisProperties_t;
 
 void imu_init(void);
-int16_t get_raw_acceleration(axis_t axis);
-int16_t get_filtered_acceleration(axis_t axis);
-uint32_t get_magnitude(void);
+int16_t imu_getRawAcceleration(axis_t axis);
+int16_t imu_getFilteredAcceleration(axis_t axis);
+uint32_t imu_getMagnitude(void);
 
-#endif /* INC_IMU_H_ */
+#endif // IMU_H

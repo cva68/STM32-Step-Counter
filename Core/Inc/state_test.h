@@ -1,10 +1,11 @@
 /*
- * state_task_test.h
+ * state_test.g
  *
- * Contains functionality for the test state of the FSM
+ * Functionality for the test mode of the step counter, allowing modification of the
+ * current step count.
  *
  *  Created on: Apr 20, 2025
- *      Author: cva68
+ *      Authors: C. Varney, A. Walker
  */
 
 #ifndef STATE_TASK_TEST_H
@@ -12,13 +13,12 @@
 
 #include <stdbool.h>
 #include <stdio.h>
-#include "state_task_count.h" // For getting current number of steps
-#include "state_task_goal.h" // For getting current goal
+#include "steps.h"
 #include "joystick.h"
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 #include "ssd1306_conf.h"
 
-void test_state_task_execute(void);
+void state_test_executeTask(void);
 
 #endif // STATE_TASK_TEST_H

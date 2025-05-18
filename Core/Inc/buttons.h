@@ -6,7 +6,7 @@
 //
 // Support for a set of FOUR specific buttons on the NUCLEO boards.
 // ENCE361 sample code.
-// The buttons are UP and DOWN plus LEFT and RIGHT.
+// The buttons are UP and DOWN plus LEFT and RIGHT (now includes the joystick button).
 //
 // Created by P.J. Bones, UC ECE
 // Updated by Le Yang & F. Youssif, UC ECE.

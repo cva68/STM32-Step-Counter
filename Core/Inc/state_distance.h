@@ -1,10 +1,10 @@
 /*
- * state_task_distance.h
+ * state_distance.h
  *
- * Contains functionality for the distance state of the FSM
+ * Functions for displaying the walked distance on the display.
  *
  *  Created on: Apr 10, 2025
- *      Author: root
+ *  	Authors: C. Varney, A. Walker
  */
 
 #ifndef STATE_TASK_DISTANCE_H
@@ -16,10 +16,10 @@
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 #include "ssd1306_conf.h"
-#include "state_task_count.h" // For reading step goal
+#include "steps.h"
 
-void toggle_distance_unit(void);
-void distance_state_task_execute(void);
+void state_distance_toggleUnit(void);
+void state_distance_executeTask(void);
 
 #endif // STATE_TASK_DISTANCE_H
 

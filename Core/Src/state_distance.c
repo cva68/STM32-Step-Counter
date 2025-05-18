@@ -1,33 +1,36 @@
 /*
- * state_task_distance.c
+ * state_distance.c
  *
- * Contains functionality for the distance state of the FSM
+ * Functions for displaying the walked distance on the display.
  *
  *  Created on: Apr 10, 2025
- *      Author: root
+ *  	Authors: C. Varney, A. Walker
  */
 
 #include <stdbool.h>
 #include <stdio.h>
-#include "state_task_distance.h"
-#include "state_task_count.h" // For getting current number of steps
+#include "state_distance.h"
+#include "steps.h"
+#include "ssd1306.h"
+#include "ssd1306_fonts.h"
+#include "ssd1306_conf.h"
 
 // Define conversion rates
-#define CM_PER_STEP 80
+#define CM_PER_STEP 90
 #define KILOMETRES_TO_YARDS 1093
 
 // Boolean for selecting units (km/yd)
 static bool distance_in_yards = false;
 
-void toggle_distance_unit(void) {
+void state_distance_toggleUnit(void) {
 	distance_in_yards = !(distance_in_yards);
 }
 
-void distance_state_task_execute(void)
+void state_distance_executeTask(void)
 {
 	// Calculate the distance walked, in meters, avoiding floats
 	static char distance_string[19];
-	uint16_t meters = ((uint32_t)get_step_count() * CM_PER_STEP) / 100;
+	uint16_t meters = ((uint32_t)steps_getStepCount() * CM_PER_STEP) / 100;
 
 	// Convert to yards if requested
 	if (distance_in_yards) {

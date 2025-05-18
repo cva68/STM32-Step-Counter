@@ -1,9 +1,14 @@
 /*
  * imu.c
  *
+ * IMU Abstraction. Allows getting raw or filtered acceleration in each direction axis_t (X, Y or Z).
+ * Each axis has an associated Filter_t, and every call to imu_getFilteredAcceleration will populate
+ * the circular buffer of this filter.
+ *
  *  Created on: May 5, 2025
- *      Author: awa158
+ *  	Authors: C. Varney, A. Walker
  */
+
 #include "imu.h"
 #include "imu_lsm6ds.h"
 #include "filter.h"
@@ -11,10 +16,11 @@
 // X, Y, Z
 #define NUM_AXIS 3
 
-// Instead of storing large axisProperties_t.scale values,
-// we store smaller integers then divide by this value.
+// Because axisProperties_t.scale would need to be a float, we
+// instead store it as an integer, then divide by SCALE_DIVIDER.
 #define SCALE_DIVIDER 1000 
 
+// Create new FIR filters for each axis
 Filter_t xFilter;
 Filter_t yFilter;
 Filter_t zFilter;
@@ -53,7 +59,8 @@ axisProperties_t axis_properties[NUM_AXIS] =
 		}
 };
 
-void imu_init(void){
+void imu_init(void)
+{
 	// Enable accelerometer
 	imu_lsm6ds_write_byte(CTRL1_XL, CTRL1_XL_HIGH_PERFORMANCE);
 
@@ -64,8 +71,9 @@ void imu_init(void){
 	}
 }
 
-int16_t get_raw_acceleration(axis_t axis)
+int16_t imu_getRawAcceleration(axis_t axis)
 {
+	// Get unfiltered acceleration value of a given axis
     uint8_t acc_low = imu_lsm6ds_read_byte(axis_properties[axis].low_byte); // Low byte
     uint8_t acc_high = imu_lsm6ds_read_byte(axis_properties[axis].high_byte); // High byte
 
@@ -77,20 +85,23 @@ int16_t get_raw_acceleration(axis_t axis)
     return (int16_t) acceleration;
 }
 
-int16_t get_filtered_acceleration(axis_t axis)
+int16_t imu_getFilteredAcceleration(axis_t axis)
 {
-	int16_t acc = get_raw_acceleration(axis);
+	// Get filtered acceleration value of a given axis, which will simulatenously
+	// shift the current acceleration value into the filter circular buffer.
+	int16_t acc = imu_getRawAcceleration(axis);
 	int16_t acc_filtered = filter_apply(axis_properties[axis].filter, acc);
 	return acc_filtered;
 }
 
-uint32_t get_magnitude(void) {
+uint32_t imu_getMagnitude(void) {
+	// Get the acceleration magnitude squared (as to avoid sqrts)
     int32_t acceleration_magnitude  = 0;
     int16_t this_acceleration;
 
     for (int i = 0; i < NUM_AXIS; i++)
 	{
-		this_acceleration = get_filtered_acceleration(i);
+		this_acceleration = imu_getFilteredAcceleration(i);
         acceleration_magnitude += this_acceleration * this_acceleration;
 	}
 

@@ -1,4 +1,7 @@
 # ENCE361 Step Counter Project
 
-## Milestone 2 Block Diagram
-![Block Diagram](milestone2-bd.png)
+## Block Diagram
+![Block Diagram](block-diagram.png)
+
+## Finite State Machine
+![FSM](fsm.png)
