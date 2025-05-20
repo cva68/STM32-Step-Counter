@@ -10,7 +10,7 @@ The following operation modes are included:
 - A test state, allowing a developer to manually set the current step count for debugging purposes.
 
 These states are summarised by the FSM diagram below.
-![FSM](fsm.png)
+![FSM](./Documentation%20Images/fsm.png)
 
 Some additional features include:
 - Alerts via the buzzer upon goal completion.
@@ -18,7 +18,7 @@ Some additional features include:
 
 ## Modularisation
 ### Description
-![Block Diagram](block-diagram.png)
+![Block Diagram](./Documentation%20Images/fsm.png)
 
 The modules were split into three different sections:
 - Hardware Abstraction Layer: Inbuilt / provided modules to interface with peripherals
@@ -52,13 +52,21 @@ Overall, the choices for modularisation have reduced rigidity and fragility, and
 ## Firmware Operation
 
 ### IMU Processing
-Plot of raw data (x,y,z), plot of filtered data(x,y,z), plot of magnitude, plot containing hysteresis regions (red blocks showing when in hysteresis). Description of how we picked upper and lower hysteresis values. Description of level-surface rejection. 
+Plot of raw data (x,y,z), plot of filtered data(x,y,z), plot of magnitude, plot containing hysteresis regions (red blocks showing when in hysteresis). Description of how we picked upper and lower hysteresis values. Description of level-surface rejection.
+
+![Raw Sensor Data](./Documentation%20Images/raw_sensor.png)
+
+![Filtered Sensor Data](./Documentation%20Images/filtered_sensor.png)
+
+![Magnitude Data](./Documentation%20Images/mag_sensor.png)
 
 ### Scheduler Description
 How our design is interrupt-driven. How our task scheduling works. 
 
 ### Scheduler Timing
 Task schedule diagram. Justification of each refresh rate. Address the problem of having back-to-back tasks, comment on why it won't impact performance here.
+
+![Task Schedule Diagram](./Documentation%20Images/mag_sensor.png)
 
 ## Conclusion
 What we learnt, what went well, problems we faced, things to improve on in the future.
