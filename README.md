@@ -66,7 +66,7 @@ How our design is interrupt-driven. How our task scheduling works.
 ### Scheduler Timing
 Task schedule diagram. Justification of each refresh rate. Address the problem of having back-to-back tasks, comment on why it won't impact performance here.
 
-![Task Schedule Diagram](./Documentation%20Images/mag_sensor.png)
+![Task Schedule Diagram](./Documentation%20Images/task_schedule.png)
 
 ## Conclusion
 What we learnt, what went well, problems we faced, things to improve on in the future.
