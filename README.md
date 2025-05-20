@@ -18,7 +18,7 @@ Some additional features include:
 
 ## Modularisation
 ### Description
-![Block Diagram](./Documentation%20Images/fsm.png)
+![Block Diagram](./Documentation%20Images/block-diagram.png)
 
 The modules were split into three different sections:
 - Hardware Abstraction Layer: Inbuilt / provided modules to interface with peripherals
