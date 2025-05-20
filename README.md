@@ -52,21 +52,52 @@ Overall, the choices for modularisation have reduced rigidity and fragility, and
 ## Firmware Operation
 
 ### IMU Processing
-Plot of raw data (x,y,z), plot of filtered data(x,y,z), plot of magnitude, plot containing hysteresis regions (red blocks showing when in hysteresis). Description of how we picked upper and lower hysteresis values. Description of level-surface rejection.
+A key consideration when developing the IMU module was calibration abstraction. Raw values from the IMU sensor are not inherently consistent or accurate due to hardware imperfections so a offset and scale system were introduced to average output across all three axes. This calibration layer was implemented as part of the driver itself to ensure that all data accessed through the module is already normalised, improving reliability and removing the need for external correction logic.
 
 ![Raw Sensor Data](./Documentation%20Images/raw_sensor.png)
 
+Once the IMU data has been read it is passed through a filtering process to reduce noise and produce more stable readings. This is achieved using a moving average filter implemented as a circular buffer. Each axis of the IMU has its own dedicated filter instance, which stores a fixed number of recent samples. When a new acceleration value is received, it replaces the oldest value in the buffer, and the filtered output is computed as the average of all values in the buffer. By filtering at this stage, we ensure that any logic using IMU values relies on consistent and predictable input.
+
 ![Filtered Sensor Data](./Documentation%20Images/filtered_sensor.png)
+
+To determine when a step occurs, we calculate the acceleration magnitude using the filtered X, Y, and Z axis values. This provides a measure of motion intensity that is independent from direction, which is particularly useful for detecting steps in any orientation. To improve reliability, we implemented a hysteresis approach with clearly defined upper and lower bounds. The upper threshold is chosen to capture the distinct spike in acceleration caused by a step, while the lower threshold ensures that small fluctuations or noise do not repeatedly trigger step events. This separation prevents rapid toggling and stabilises step detection. In addition to hysteresis, we also introduced a level-surface rejection mechanism by monitoring the Z-axis acceleration. If the Z-axis reading remains within a narrow range around 1G—the expected acceleration when stationary on a flat surface—then step detection is suppressed. This helps avoid false positives when the device is idle but still subject to minor vibrations or tilt. So that only deliberate movement is detected.
 
 ![Magnitude Data](./Documentation%20Images/mag_sensor.png)
 
 ### Scheduler Description
-How our design is interrupt-driven. How our task scheduling works. 
+Our design is fundamentally interrupt-driven, built around the use of the HAL_GetTick() function. Which is updated via the SysTick timer interrupt at a 1 kHz frequency. This tick-based mechanism allows us to implement a cooperative task scheduler that executes tasks at precise intervals without relying on blocking delays. Each task in the system is associated with a specific frequency that is converted to tick periods. In the main loop, the current tick count is compared against the scheduled run times of each task, and when a task is due, it is executed and its next run time is updated. This structure ensures time-sensitive tasks are serviced regularly while less critical tasks run at lower frequencies to conserve CPU resources. Because all timing is driven by the SysTick interrupt, we achieve consistent scheduling with minimal jitter. Additonally, it makes our task management remains easy to modify or add new modules.
 
 ### Scheduler Timing
 Task schedule diagram. Justification of each refresh rate. Address the problem of having back-to-back tasks, comment on why it won't impact performance here.
 
 ![Task Schedule Diagram](./Documentation%20Images/task_schedule.png)
 
+### Task Refresh Rate Justification
+
+- **Button Task (100 Hz):**  
+  Ensures responsive input handling and reliable debouncing without delay.
+
+- **Joystick Task (10 Hz):**  
+  Captures user input at a moderate frequency for smooth control without excessive sampling.
+
+- **ADC Task (10 Hz):**  
+  Samples analog inputs at a sufficient rate for typical usage while minimizing system load.
+
+- **FSM Task (6 Hz):**  
+  Updates the display state machine slowly enough to reduce flicker, yet fast enough to remain responsive.
+
+- **Buzzer Task (6 Hz):**  
+  Controls audio output with moderate timing resolution for alert patterns or tones.
+
+- **LED Task (6 Hz):**  
+  Updates LED indicators with perceptually smooth transitions and status changes.
+
+- **IMU Task (50 Hz):**  
+  Provides high enough frequency to accurately detect steps and motion while avoiding unnecessary CPU usage.
+
+A potential issue with this scheduling is back-to-back task execution where multiple tasks may become ready to execute in the same tick... Idk why it wont affect preformance :|
+
 ## Conclusion
 What we learnt, what went well, problems we faced, things to improve on in the future.
+
+Man idk the ENCE361-25S1 - Embedded Systems 1 grade was the friends we made along the way.
