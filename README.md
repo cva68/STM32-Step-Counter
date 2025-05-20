@@ -52,7 +52,7 @@ Overall, the choices for modularisation have reduced rigidity and fragility, and
 ## Firmware Operation
 
 ### IMU Processing
-Plot of raw data, plot of filtered data, plot containing hysteresis regions. Description of how we picked upper and lower hysteresis values. Description of level-surface rejection. 
+Plot of raw data (x,y,z), plot of filtered data(x,y,z), plot of magnitude, plot containing hysteresis regions (red blocks showing when in hysteresis). Description of how we picked upper and lower hysteresis values. Description of level-surface rejection. 
 
 ### Scheduler Description
 How our design is interrupt-driven. How our task scheduling works. 
