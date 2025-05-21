@@ -101,5 +101,5 @@ Additionally, tasks are designed to avoid contention for shared resources. Like 
 This project demonstrated the value of modular design, task separation, and scheduling in embedded systems. By isolating functionality and reducing dependencies, we created a flexible codebase that is easy to modify. The system had responsive user input and accurate step detection through the use of filtering and correct calibration. However, in the future, edge cases should be tested more thoroughly for more robust behaviour. Overall, while some testing remained, the architecture provides a solid foundation for future additions or reuse in similar projects.
 
 ## Developers
-[Auron Walker](auronwalker.com)
-[Connor Varney](varney.nz)
+[Auron Walker](https://auronwalker.com/)
+[Connor Varney](https://varney.nz/)
