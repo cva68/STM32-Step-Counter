@@ -60,7 +60,7 @@ Once the IMU data has been read it is passed through a filtering process to redu
 
 ![Filtered Sensor Data](./Documentation%20Images/filtered_sensor.png)
 
-To determine when a step occurs, we calculate the acceleration magnitude using the filtered X, Y, and Z axis values. This provides a measure of motion intensity that is independent of direction, which is particularly useful for detecting steps in any orientation. To improve reliability, we implemented a hysteresis approach with an upper and lower bound. The upper threshold is chosen to capture the distinct spike in acceleration caused by a step. In contrast, the lower threshold ensures that small fluctuations or noise do not repeatedly trigger step events. It does this by debouncing the motion so that once the upper bounds have been exceeded, it won't count another step until the acceleration is below the lower threshold. This separation prevents rapid toggling and stabilises step detection. In addition to hysteresis, we introduced a level-surface rejection mechanism by monitoring the Z-axis acceleration. If the Z-axis reading remains within a narrow range around 1G, then step detection is suppressed. This helps avoid false positives when the device is idle but still subject to minor vibrations or tilt. So that only deliberate movement is detected.
+To determine when a step occurs, we calculate the acceleration magnitude using the filtered X, Y, and Z axis values. This provides a measure of motion intensity that is independent of direction, which is particularly useful for detecting steps in any orientation. To improve reliability, we implemented a hysteresis approach with an upper and lower bound. The upper threshold is chosen to capture the distinct spike in acceleration caused by a step. In contrast, the lower threshold ensures that small fluctuations or noise do not repeatedly trigger step events. It does this by debouncing the motion so that once the upper bounds have been exceeded, it won't count another step until the acceleration is below the lower threshold. This separation prevents rapid toggling and stabilises step detection. In addition to hysteresis, we introduced a level-surface rejection mechanism by monitoring the Z-axis acceleration. If the Z-axis reading remains within a narrow range around 1G, then step detection is suppressed. This helps avoid false positives when the device is idle but still subject to minor vibrations or tilt.
 
 ![Magnitude Data](./Documentation%20Images/mag_sensor.png)
 
@@ -99,3 +99,7 @@ Additionally, tasks are designed to avoid contention for shared resources. Like 
 
 ## Conclusion
 This project demonstrated the value of modular design, task separation, and scheduling in embedded systems. By isolating functionality and reducing dependencies, we created a flexible codebase that is easy to modify. The system had responsive user input and accurate step detection through the use of filtering and correct calibration. However, in the future, edge cases should be tested more thoroughly for more robust behaviour. Overall, while some testing remained, the architecture provides a solid foundation for future additions or reuse in similar projects.
+
+## Developers
+[Auron Walker](auronwalker.com)
+[Connor Varney](varney.nz)
