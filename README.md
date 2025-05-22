@@ -123,7 +123,7 @@ A key consideration when developing the IMU module was calibration abstraction. 
 
 ![Raw Sensor Data](./Documentation%20Images/raw_sensor.png)
 
-Once the IMU data has been read it is passed through a filtering process to reduce noise and produce more stable readings. This is achieved using a moving average filter implemented as a circular buffer. Each axis of the IMU has its own dedicated filter instance, which stores a fixed number of recent samples. When a new acceleration value is received, it replaces the oldest value in the buffer, and the filtered output is computed as the average of all values in the buffer. By filtering at this stage, we ensure that any logic using IMU values relies on consistent and predictable input.
+Once the IMU data has been read it is passed through a filtering process to reduce noise and produce more stable readings. This is achieved using a moving average filter implemented as a circular buffer. Each axis of the IMU has its own dedicated filter instance, which stores a fixed number of recent samples. When a new acceleration value is received, it replaces the oldest value in the buffer, and the filtered output is computed as the average of all values in the buffer. The result of this is shown in the below plot, where the number of sharp peaks has a visible reduction. By filtering at this stage, we ensure that any logic using IMU values relies on consistent and predictable input.
 
 ![Filtered Sensor Data](./Documentation%20Images/filtered_sensor.png)
 
