@@ -131,6 +131,8 @@ To determine when a step occurs, we calculate the acceleration magnitude using t
 
 ![Magnitude Data](./Documentation%20Images/mag_sensor.png)
 
+The above data shows a person stomping their foot 11 times, with the unit held against their waist. One false positive ocurred when the unit was mistakenly shook. Several walks of 100 steps were trialled, and the unit consistently read within 2% of the real step value.
+
 In addition to hysteresis, we introduced a level-surface rejection mechanism by monitoring the Z-axis acceleration. If the Z-axis reading remains within a narrow range around 1G, then step detection is suppressed. This helps avoid false positives when the device is idle but still subject to minor vibrations or tilt.
 
 ### Known Issues
