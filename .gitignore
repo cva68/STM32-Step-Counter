@@ -1,6 +1,31 @@
-Debug
+# STM32CubeIDE / Eclipse
+.cproject
+.project
+.mxproject
+
+# CubeIDE build artifacts
+/Debug/
+/Release/
+/build/
 .settings/
 .settings/*
+/*.elf
+/*.bin
+/*.hex
+/*.map
+/*.list
+
+# Backup or temporary files
+*.swp
+*.swo
+*.log
 *.bak
+*.tmp
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Auto-generated config
 *.launch
 .vscode
