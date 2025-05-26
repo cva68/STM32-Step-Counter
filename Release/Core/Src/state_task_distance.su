@@ -1,2 +1,0 @@
-../Core/Src/state_task_distance.c:22:6:toggle_distance_unit	0	static
-../Core/Src/state_task_distance.c:26:6:distance_state_task_execute	32	static

@@ -1,4 +1,0 @@
-../Core/Src/task_display_fsm.c:40:6:display_fsm_task_init	1
-../Core/Src/task_display_fsm.c:48:9:get_display_state	1
-../Core/Src/task_display_fsm.c:52:6:update_fsm_display	6
-../Core/Src/task_display_fsm.c:79:6:display_fsm_task_execute	23

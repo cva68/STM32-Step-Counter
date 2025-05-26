@@ -1,2 +1,0 @@
-../Core/Src/imu_lsm6ds.c:14:6:imu_lsm6ds_write_byte	1
-../Core/Src/imu_lsm6ds.c:24:9:imu_lsm6ds_read_byte	1

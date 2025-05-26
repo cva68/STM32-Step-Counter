@@ -1,3 +1,0 @@
-../Core/Src/joystick.c:28:26:get_percentage_coordinates	32	static
-../Core/Src/joystick.c:42:6:update_joystick	16	static
-../Core/Src/joystick.c:61:32:get_joystick_flags	24	static
